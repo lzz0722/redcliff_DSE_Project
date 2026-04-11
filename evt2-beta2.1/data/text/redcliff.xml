@@ -1,0 +1,444 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="zh-Hant">
+
+  
+  
+  
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title xml:lang="zh-Hant">前赤壁賦・後赤壁賦</title>
+        <title xml:lang="en" type="sub">First and Second Red Cliff Rhapsodies: A Digital Scholarly Edition</title>
+        <author xml:id="SuShi">
+          <persName xml:lang="zh-Hant">蘇軾</persName>
+          <persName xml:lang="en">Su Shi</persName>
+          <persName type="courtesy" xml:lang="zh-Hant">子瞻</persName>
+          <persName type="sobriquet" xml:lang="zh-Hant">東坡居士</persName>
+          <birth when="1037" />
+          <death when="1101" />
+        </author>
+        <editor xml:id="LinZizhe">
+          <persName>Lin Zizhe</persName>
+          <affiliation>Università di Bologna, Digital Scholarly Editing, A.A. 2025–2026</affiliation>
+        </editor>
+        <respStmt>
+          <resp>Encoding and editorial notes</resp>
+          <name ref="#LinZizhe">Lin Zizhe</name>
+        </respStmt>
+        <respStmt>
+          <resp>English translation (Watson)</resp>
+          <name xml:id="watson">Burton Watson</name>
+        </respStmt>
+        <respStmt>
+          <resp>English translation (Owen)</resp>
+          <name xml:id="owen">Stephen Owen</name>
+        </respStmt>
+      </titleStmt>
+
+      <publicationStmt>
+        <publisher>Lin Zizhe, Università di Bologna</publisher>
+        <date when="2026" />
+        <availability status="free">
+          <licence target="https://creativecommons.org/licenses/by/4.0/">
+            Editorial notes and encoding © Lin Zizhe, CC BY 4.0.
+            Primary text is in the public domain (composed 1082).
+          </licence>
+        </availability>
+        <idno type="github">https://github.com/LinZizhe/red-cliff-dse</idno>
+      </publicationStmt>
+
+      <sourceDesc>
+        <msDesc xml:id="NPM-882">
+          <msIdentifier>
+            <country>Taiwan</country>
+            <settlement>Taipei</settlement>
+            <institution>National Palace Museum</institution>
+            <idno>故畫000882</idno>
+          </msIdentifier>
+          <msContents>
+            <msItem>
+              <title xml:lang="zh-Hant">前赤壁賦</title>
+              <title xml:lang="en">First Red Cliff Rhapsody</title>
+              <note>
+                Autograph handscroll in Su Shi's own hand, ink on paper, 23.9 × 258 cm.
+                This is the only surviving manuscript of the First Rhapsody in the author's hand.
+                NOTE: The first 36 characters of the scroll are NOT in Su Shi's hand. They were
+                supplied by the Ming-dynasty calligrapher Wen Zhengming (文徵明, 1470–1559) to
+                replace text lost when the original scroll was damaged. The scroll also bears
+                colophons by Dong Qichang (董其昌, 1555–1636) and other later hands.
+                No autograph manuscript of the Second Rhapsody is known to survive.
+              </note>
+              <msItem>
+                <locus from="1" to="36">Characters 1–36: supplied by Wen Zhengming (文徵明), Ming dynasty</locus>
+              </msItem>
+            </msItem>
+          </msContents>
+          <physDesc>
+            <objectDesc form="scroll">
+              <supportDesc material="paper">
+                <extent>23.9 × 258 cm</extent>
+              </supportDesc>
+            </objectDesc>
+          </physDesc>
+          <additional>
+            <adminInfo>
+              <availability>
+                <licence target="https://creativecommons.org/licenses/by/4.0/">
+                  CC BY 4.0 @ www.npm.gov.tw
+                </licence>
+              </availability>
+            </adminInfo>
+            <surrogates>
+              <bibl type="IIIF-manifest">
+                <ptr target="https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid=882&amp;dept=P" />
+              </bibl>
+            </surrogates>
+          </additional>
+        </msDesc>
+
+        <bibl xml:id="ctext-source">
+          <title>Chinese Text Project (ctext.org)</title>
+          <ptr target="https://ctext.org/su-shi/qian-chi-bi-fu" />
+          <note>Base text for Traditional Chinese (繁體) encoding. Cross-checked against the NPM facsimile.</note>
+        </bibl>
+
+        
+        <listWit>
+          <witness xml:id="su-shi-original">
+            <bibl>Su Shi, original classical Chinese text (1082), base text from ctext.org,
+            cross-checked against the NPM autograph manuscript.</bibl>
+          </witness>
+          <witness xml:id="wit-watson">
+            <bibl>Watson, Burton. <title>Su Tung-p'o: Selections from a Sung Dynasty Poet</title>.
+            Columbia University Press, 1965.</bibl>
+          </witness>
+          <witness xml:id="wit-owen">
+            <bibl>Owen, Stephen. <title>An Anthology of Chinese Literature: Beginnings to 1911</title>.
+            W. W. Norton, 1996.</bibl>
+          </witness>
+        </listWit>
+      </sourceDesc>
+    </fileDesc>
+
+    <encodingDesc>
+      <projectDesc>
+        <p>
+          This Digital Scholarly Edition encodes Su Shi's two Red Cliff Rhapsodies (1082) in TEI/XML.
+          Its primary scholarly argument concerns the emotional register shift of five recurring images —
+          moon (月), water (水), wind (風), Red Cliff (赤壁), and the Guest (客) — across the two texts.
+          The edition is designed for an audience with no prior knowledge of classical Chinese literature
+          or culture. All editorial notes are written accordingly.
+        </p>
+      </projectDesc>
+
+      <editorialDecl>
+        <normalization>
+          <p>Traditional Chinese characters (繁體字) are used throughout as the scholarly standard,
+          matching the script of the autograph manuscript. No normalization to Simplified Chinese
+          has been made.</p>
+        </normalization>
+        <punctuation>
+          <p>Punctuation follows modern scholarly editions of the text. The original manuscript
+          contains no punctuation; the paragraph divisions and punctuation encoded here are
+          editorial decisions.</p>
+        </punctuation>
+        <interpretation>
+          <p>The five recurring images (月水風赤壁客) are annotated using &lt;seg type="image"&gt;
+          elements with @ana attributes pointing to taxonomy entries for image identity and
+          emotional register. Where a single span instantiates more than one image, multiple
+          @ana values are supplied.</p>
+          <p>Emotional register classification (Harmony, Tension, Estrangement, Uncanny) represents
+          the editor's interpretive judgment based on textual context — lexical choices, syntactic
+          structure, position within the text's argument, and relation to the surrounding passage.
+          These categories are analytical tools, not intrinsic properties of the text. Other readers
+          may classify the same passages differently; the DSE records one coherent reading while
+          acknowledging that alternatives exist.</p>
+          <p>Translation variants: Where the English translations of Watson (1965) and Owen (1996)
+          diverge in ways that affect literary or philosophical interpretation, the divergence is
+          encoded using &lt;app type="translation"&gt; with &lt;lem&gt; (the Chinese original) and
+          two &lt;rdg&gt; elements (one per translator). This is not a traditional textual apparatus
+          recording manuscript variants, but a translation apparatus recording interpretive variation
+          across two authoritative English renderings of the same source text. The rationale is that
+          translation differences are themselves a form of scholarly interpretation, and making them
+          visible is a core function of this Digital Scholarly Edition.</p>
+          <p>Source annotations: Classical allusions and intertextual references are marked using
+          &lt;note type="source"&gt; elements identifying the source text, its approximate date,
+          and its relevance to Su Shi's passage. These annotations are written for readers with no
+          prior knowledge of the Chinese literary tradition.</p>
+        </interpretation>
+      </editorialDecl>
+
+      <classDecl>
+        <taxonomy xml:id="images">
+          <desc>The five recurring images tracked across both rhapsodies</desc>
+          <category xml:id="img-moon">
+            <catDesc xml:lang="en">Moon (月 yuè) — The moon appears in both rhapsodies as a celestial witness to the river journey. In classical Chinese poetry, the moon conventionally evokes contemplation, longing, and the passage of time.</catDesc>
+          </category>
+          <category xml:id="img-water">
+            <catDesc xml:lang="en">Water (水 shuǐ) / River (江 jiāng) — The Yangzi River (長江) forms the physical setting of both rhapsodies. Water functions as a site of philosophical reflection in the First Rhapsody, and as an uncanny, sublime force in the Second.</catDesc>
+          </category>
+          <category xml:id="img-wind">
+            <catDesc xml:lang="en">Wind (風 fēng) — Wind opens the First Rhapsody as a gentle, transcendent force. Its virtual absence in the Second Rhapsody marks a change in the spiritual atmosphere of the text.</catDesc>
+          </category>
+          <category xml:id="img-redcliff">
+            <catDesc xml:lang="en">Red Cliff (赤壁 Chìbì) — The name of the cliff along the Yangzi River where Su Shi moored his boat. Historically, it is associated with the Battle of Red Cliffs (208 CE), in which the warlord Cao Cao was defeated. Su Shi may have been visiting a different site than the historical battlefield, but the historical resonance is central to the text.</catDesc>
+          </category>
+          <category xml:id="img-guest">
+            <catDesc xml:lang="en">The Guest (客 kè) — In the First Rhapsody, the Guest is a companion who voices existential grief and is consoled by Su Shi's philosophical argument. In the Second, the Guest's identity becomes ambiguous, merging with the dreaming speaker and possibly with the mysterious crane that appears at the end. Scholars debate whether the Guest is a real companion or an externalization of Su Shi's own inner doubt.</catDesc>
+          </category>
+        </taxonomy>
+
+        <taxonomy xml:id="registers">
+          <desc>Emotional register tags for annotated image occurrences</desc>
+          <category xml:id="reg-harmony">
+            <catDesc>Harmony — The image appears in a context of transcendence, philosophical acceptance, or joyful harmony with the natural world.</catDesc>
+          </category>
+          <category xml:id="reg-estrangement">
+            <catDesc>Estrangement — The image appears in a context of sorrow, loss, or longing, often evoking the passage of time or the fragility of human achievement.</catDesc>
+          </category>
+          <category xml:id="reg-tension">
+            <catDesc>Tension — The image carries conflicting emotional valences simultaneously, or is used to articulate a tension between grief and acceptance that is not resolved.</catDesc>
+          </category>
+          <category xml:id="reg-uncanny">
+            <catDesc>Uncanny — The image appears in a context of strangeness, the uncanny, or the dreamlike, where the familiar has become unrecognizable or threatening.</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+
+    </encodingDesc>
+
+    <profileDesc>
+      <creation>
+        <date when="1082">1082 CE (Song dynasty, reign of Emperor Shenzong, Yuanfeng 5)</date>
+        <placeName>Huangzhou (黃州), Hubei Province, China — Su Shi's place of political exile</placeName>
+      </creation>
+      <langUsage>
+        <language ident="zh-Hant">Traditional Chinese (classical wenyan 文言 register)</language>
+        <language ident="en">English (editorial notes and translations)</language>
+      </langUsage>
+      <textClass>
+        <keywords scheme="#images">
+          <term>moon</term>
+          <term>water</term>
+          <term>wind</term>
+          <term>Red Cliff</term>
+          <term>Guest</term>
+        </keywords>
+      </textClass>
+    </profileDesc>
+
+    <revisionDesc>
+      <change when="2026" who="#LinZizhe">Initial TEI encoding completed (Phase 2, DSE project)</change>
+    </revisionDesc>
+  </teiHeader>
+
+  
+  
+  
+  <facsimile>
+    <surface xml:id="ms-NPM-882" corresp="#NPM-882">
+      <ptr type="IIIF-viewer" target="https://digitalarchive.npm.gov.tw/Integrate/IIIFViewer?id=882&amp;dep=P&amp;imageName=" />
+      <graphic url="https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid=882&amp;dept=P" mimeType="application/json" type="IIIF-manifest" />
+      <note>
+        Autograph handscroll of the First Red Cliff Rhapsody, National Palace Museum, Taipei.
+        CC BY 4.0 @ www.npm.gov.tw.
+        Characters 1–36 are in the hand of Wen Zhengming (文徵明), not Su Shi.
+        No manuscript of the Second Rhapsody is extant.
+      </note>
+    </surface>
+  </facsimile>
+
+  
+  
+  
+  
+  
+  
+  
+  <text>
+    <body>
+      <div type="work" xml:id="redcliff-rhapsodies">
+
+        
+        
+        
+        <div type="rhapsody" n="1" xml:id="first-rhapsody" xml:lang="zh-Hant">
+          <pb n="1" xml:id="pb-R1" />
+          <head>
+            <title xml:lang="zh-Hant">前赤壁賦</title>
+            <title xml:lang="en">First Red Cliff Rhapsody</title>
+            <dateline>元豐五年七月既望</dateline>
+            <note type="editorial" xml:lang="en">
+              Written on the night of the full moon of the seventh month of the fifth year of the
+              Yuanfeng reign era, corresponding to approximately August 1082 CE. Su Shi was at this
+              time serving his exile at Huangzhou (modern Huanggang, Hubei Province), a punishment
+              for his alleged criticism of the government in his poetry — the so-called Wutai Poetry
+              Inquisition (烏台詩案) of 1079, which had nearly cost him his life.
+            </note>
+          </head>
+
+          
+          <p xml:id="R1P1">
+            <app xml:id="app-para-R1P1"><lem wit="#su-shi-original">壬戌之秋，七月既望，蘇子與客泛舟，游於赤壁之下。清風徐來，水波不興。舉酒屬客，誦明月之詩，歌窈窕之章。少焉，月出於東山之上，徘徊於斗牛之間。白露橫江，水光接天。縱一葦之所如，凌萬頃之茫然。浩浩乎如馮虛御風，而不知其所止；飄飄乎如遺世獨立，羽化而登仙。</lem><rdg wit="#wit-watson">In the autumn of the year renxu, on the sixteenth day of the seventh month, Master Su and his guests went boating below the Red Cliff. A cool breeze blew gently; the water was calm and unruffled. Raising his cup, he toasted his guests, reciting the poem about the bright moon, singing the verse about the graceful one. Before long the moon rose above the Eastern Mountain, lingering between the constellations of the Dipper and the Ox. White dew lay across the river; the water's gleam merged with the sky. Letting the reed of a boat drift wherever it would, over the immensity of ten thousand acres, he felt how boundless it was, as if he were riding the void with the wind as his steed, not knowing where he would stop; how light and free, as if he had left the world behind and were standing alone, transformed into a feathered immortal ascending to the heavens.</rdg><rdg wit="#wit-owen">In the autumn of the year renxu, on the sixteenth of the seventh month, Master Su went with guests on a boat trip beneath Red Cliff. A cool breeze arose gently; the surface of the water was still. He raised his wine to toast his guests and recited the poem on the bright moon, sang the stanza of the lovely one. After a while the moon came up over the eastern hills and lingered between the Dipper and the Ox-herd. White dew stretched across the river; the gleam of the water reached to the sky. He let his reed of a boat go where it would, over the vastness of ten thousand acres. How vast it was — as if riding the empty air with the wind, not knowing where to stop; how light — as if having left the world, standing alone, growing wings and becoming a flying immortal.</rdg></app></p>
+
+          
+          <p xml:id="R1P2">
+            <app xml:id="app-para-R1P2"><lem wit="#su-shi-original">於是飲酒樂甚，扣舷而歌之。歌曰：「桂棹兮蘭槳，擊空明兮溯流光。渺渺兮余懷，望美人兮天一方。」客有吹洞簫者，倚歌而和之。其聲嗚嗚然：如怨如慕，如泣如訴；餘音嫋嫋，不絕如縷，舞幽壑之潛蛟，泣孤舟之嫠婦。</lem><rdg wit="#wit-watson">Then they drank more wine and were very happy, and they beat on the side of the boat and sang. The song went: "Cassia oars, orchid paddles — we strike the clear shimmer and trace back the streaming light. My heart is far, far away — I gaze at the Beautiful One on the far side of heaven." Among the guests there was one who played the transverse flute, and he accompanied the song. His notes rang mournful — as if in longing, as if in complaint, as if in weeping, as if in reproach. The lingering sound trailed on and on like an unbroken thread. It would have made the hidden dragon dance in his dark ravine and the widow weep in her solitary boat.</rdg><rdg wit="#wit-owen">Then they drank more wine and were full of joy; they tapped on the side of the boat and sang. The song said: "Cassia sweeps and orchid oars — we strike the empty brightness and go up against the streaming light. Far, far away is my heart — I look for the Beautiful One at the far end of Heaven." One of the guests played a transverse flute and accompanied the song. The sound of the notes was mournful — as if longing, as if complaining, as if weeping, as if reproaching. The lingering tones drifted on and on like a thread that would not break. It would have made a dragon dance in a deep ravine, and a widow weep in her lonely boat.</rdg></app></p>
+
+          
+          <p xml:id="R1P3">
+            <app xml:id="app-para-R1P3"><lem wit="#su-shi-original">蘇子愀然，正襟危坐，而問客曰：「何為其然也？」客曰：「月明星稀，烏鵲南飛，此非曹孟德之詩乎？西望夏口，東望武昌，山川相繆，鬱乎蒼蒼；此非孟德之困於周郎者乎？方其破荊州，下江陵，順流而東也，舳艫千里，旌旗蔽空，釃酒臨江，橫槊賦詩，固一世之雄也，而今安在哉？況吾與子，漁樵於江渚之上，侶魚蝦而友麋鹿，駕一葉之扁舟，舉匏尊以相屬。寄蜉蝣於天地，渺滄海之一粟。哀吾生之須臾，羨長江之無窮。挾飛仙以遨遊，抱明月而長終。知不可乎驟得，托遺響於悲風。」</lem><rdg wit="#wit-watson">Master Su's expression grew solemn. Straightening his robe, he sat upright and asked the guest: "Why is it like that?" The guest replied: "'The moon is bright, the stars are few; crows and magpies fly south' — is this not a poem by Cao Mengde? Looking west toward Xiakou, looking east toward Wuchang, where mountain and river wind around each other, green upon green — was this not where Mengde was trapped by Zhou Yu? When he had just conquered Jingzhou and taken Jiangling and was sailing east with the current, his warships stretched a thousand li, his flags blotted out the sky. Pouring wine at the river's edge, he held his spear crosswise and composed poems — truly the hero of his age. And where is he now? And how much more so for you and me, fishing and gathering wood on the river islets, keeping company with fish and shrimp, befriending deer. We ride a single-leaf boat and raise gourd cups to toast each other. We are like mayflies placed between heaven and earth, tiny as a single grain in the vast ocean. I grieve that my life is but a moment; I envy the endless flow of the Long River. I wish I could take a flying immortal as my companion and embrace the bright moon forever. But I know this cannot be had so suddenly — so I pour these lingering notes into the sad wind."</rdg><rdg wit="#wit-owen">Master Su's expression changed. He adjusted his robe, sat up straight, and asked the guest: "Why is it so?" The guest answered: "'Bright is the moon, sparse are the stars; crows and magpies fly south' — is this not a poem by Cao Mengde? Looking west to Xiakou, east to Wuchang, mountains and rivers winding around each other, thick and green — is this not where Mengde was hemmed in by Zhou Yu? When he had just broken Jingzhou and gone downstream to Jiangling, going east with the current — his prow-to-stern line stretched a thousand li, his pennants hid the sky; pouring wine by the river, he held his lance crossways and composed poetry — he was indeed the champion of his age, and where is he now? How much more so you and I, fishing and cutting wood on the river's shore, companions of fish and shrimp, friends of elk and deer. We ride a single-leaf skiff and raise gourds of wine to toast one another. We are like mayflies lodged between Heaven and Earth, a single grain in the vastness of the sea. I lament the briefness of my life, and envy the endless flow of the great river. I would take a flying immortal to roam with, embrace the bright moon and live forever. But I know this cannot be had so quickly — so I pour my lingering sounds into the mournful wind."</rdg></app></p>
+
+          
+          <p xml:id="R1P4">
+            <app xml:id="app-para-R1P4"><lem wit="#su-shi-original">蘇子曰：「客亦知夫水與月乎？逝者如斯，而未嘗往也；盈虛者如彼，而卒莫消長也。蓋將自其變者而觀之，則天地曾不能以一瞬；自其不變者而觀之，則物與我皆無盡也，而又何羨乎！且夫天地之間，物各有主，苟非吾之所有，雖一毫而莫取。惟江上之清風，與山間之明月，耳得之而為聲，目遇之而成色，取之無禁，用之不竭，是造物者之無盡藏也，而吾與子之所共適。」</lem><rdg wit="#wit-watson">Master Su said: "Do you too know of water and the moon? What passes is like this, and yet it has never gone; what waxes and wanes is like that, and yet it has never truly grown or diminished. For if we look at things through the eyes of change, then heaven and earth cannot last for even the blink of an eye. But if we look at them through the eyes of changelessness, then I and all things are alike inexhaustible — so what is there to envy? Moreover, between heaven and earth, everything has its owner. If it is not mine, I cannot take even a hair of it. Only the clear wind on the river and the bright moon on the hills: the ear receives them and they become sound; the eye meets them and they become colour. There is no one to forbid our taking them, and no end to our use of them. They are the inexhaustible treasury of the Creator, and they are what you and I may enjoy together."</rdg><rdg wit="#wit-owen">Master Su said: "Do you too understand water and the moon? That which is passing is like this, yet it has never gone; that which waxes and wanes is like this, yet in the end it can neither grow nor diminish. For if you look at things from the standpoint of change, then Heaven and Earth do not last for the blink of an eye. But if you look at them from the standpoint of changelessness, then I and all other things are alike without end — so what is there to envy? Moreover, between Heaven and Earth each thing has its master. If it is not something I possess, then I do not take even a strand of it. Only the pure wind on the river and the bright moon between the hills: the ear gets it and it becomes sound; the eye encounters it and it becomes colour. There is no prohibition on taking it; it cannot be used up. This is the inexhaustible treasury of the Creator, and it is what you and I may enjoy together."</rdg></app></p>
+
+          
+          <p xml:id="R1P5">
+            <app xml:id="app-para-R1P5"><lem wit="#su-shi-original">客喜而笑，洗盞更酌。餚核既盡，杯盤狼藉，相與枕藉乎舟中，不知東方之既白。</lem><rdg wit="#wit-watson">The guest smiled with joy, and they rinsed the cups and poured again. The food and fruit were all gone; cups and dishes lay in disarray. They lay down to rest against each other in the boat, not knowing that the east had already grown light.</rdg><rdg wit="#wit-owen">The guest was pleased and laughed. They washed the cups and poured again. The delicacies and fruit were all finished; cups and dishes lay in a jumble. They leaned against each other and fell asleep in the boat, not noticing that the east had already grown bright.</rdg></app></p>
+        </div>
+
+        
+        
+        
+        <div type="rhapsody" n="2" xml:id="second-rhapsody" xml:lang="zh-Hant">
+          <pb n="2" xml:id="pb-R2" />
+          <head>
+            <title xml:lang="zh-Hant">後赤壁賦</title>
+            <title xml:lang="en">Second Red Cliff Rhapsody</title>
+            <dateline>是歲十月之望</dateline>
+            <note type="editorial" xml:lang="en">
+              Written on the night of the full moon of the tenth month of the same year (1082 CE),
+              approximately three months after the First Rhapsody. The season has changed from late
+              summer to winter, and this seasonal shift registers throughout the text: the river is
+              lower, the cliffs are barer, the moon is more distant and smaller. The Second Rhapsody
+              returns to the same site but finds it transformed — or rather, finds that the speaker
+              himself has been transformed and can no longer inhabit the transcendence of the First.
+            </note>
+          </head>
+
+          
+          <p xml:id="R2P1">
+            <app xml:id="app-para-R2P1"><lem wit="#su-shi-original">是歲十月之望，步自雪堂，將歸於臨皋。二客從予，過黃泥之坂。霜露既降，木葉盡脫，人影在地，仰見明月。顧而樂之，行歌相答。</lem><rdg wit="#wit-watson">On the fifteenth day of the tenth month of that year, I was walking from Snow Hall back to Linggao. Two guests followed me as we crossed the slope at Huangni. Frost and dew had already fallen; all the trees were bare. Our shadows lay on the ground; looking up, we saw the bright moon. Gazing about, we took delight in it, and sang songs back and forth as we walked.</rdg><rdg wit="#wit-owen">On the fifteenth of the tenth month of that year, I was walking from Snow Hall back to Linggao. Two guests came along with me as we passed the slope of Yellow Mud. Frost and dew had already descended; all the leaves had shed. Our shadows were cast on the ground; looking up, we saw the bright moon. We looked about us and enjoyed it, and walked along singing, answering each other in song.</rdg></app></p>
+
+          
+          <p xml:id="R2P2">
+            <app xml:id="app-para-R2P2"><lem wit="#su-shi-original">已而歎曰：「有客無酒，有酒無肴，月白風清，此良夜之難虛也！」顧而謂二客曰：「今者薄暮，舉網得魚，巨口細鱗，狀似松江之鱸；顧安所得酒乎？」歸而謀諸婦。婦曰：「我有斗酒，藏之久矣，以待子不時之需。」於是攜酒與魚，復游於赤壁之下。</lem><rdg wit="#wit-watson">After a while I sighed: "I have guests but no wine; I have wine but no delicacies. The moon is white, the breeze is cool — what a pity to let such a fine night pass!" One of the guests said: "Today at dusk I cast a net and caught a fish — big mouth, fine scales, it looked like a Songjiang perch. But where can we get wine?" I went home and consulted my wife. She said: "I have a measure of wine; I've been keeping it a long time, in case you might need it unexpectedly." So we took the wine and the fish and went back to roam beneath Red Cliff.</rdg><rdg wit="#wit-owen">After a while I sighed and said: "There are guests but no wine; there is wine but no food. The moon is white and the breeze is cool — can we just let this fine night pass for nothing?" One of the guests said: "This evening at dusk I put out a net and caught a fish — large-mouthed with fine scales, it looks like a Songjiang bass. But where can we get wine?" I went home and asked my wife. She said: "I have a measure of wine; I've kept it for some time now, in case you should need it at some unexpected moment." So we took the wine and fish and went once more to roam beneath Red Cliff.</rdg></app></p>
+
+          
+          <p xml:id="R2P3">
+            <app xml:id="app-para-R2P3"><lem wit="#su-shi-original">江流有聲，斷岸千尺，山高月小，水落石出。曾日月之幾何，而江山不可復識矣！</lem><rdg wit="#wit-watson">The river flowed with a rushing sound; the sheer banks rose a thousand feet. The mountains were tall and the moon tiny; the water had fallen and the rocks emerged. How many days and months had passed — and yet the rivers and mountains were beyond recognition!</rdg><rdg wit="#wit-owen">The river flowed with a sound; the cut bank rose a thousand feet. The mountains were high and the moon small; the water had fallen and the rocks come out. How many days and months had passed — yet the rivers and hills cannot be known again!</rdg></app></p>
+
+          
+          <p xml:id="R2P4">
+            <app xml:id="app-para-R2P4"><lem wit="#su-shi-original">予乃攝衣而上，履巉岩，披蒙茸，踞虎豹，登虬龍，攀棲鶻之危巢，俯馮夷之幽宮。蓋二客不能從焉。劃然長嘯，草木震動，山鳴谷應，風起水涌。予亦悄然而悲，肅然而恐，凛乎其不可留也。</lem><rdg wit="#wit-watson">I pulled up my robe and climbed, treading over jagged rocks, pushing through tangled brush, crouching on tiger-and-leopard-shaped boulders, pulling myself up to twisted-dragon trees, clambering to the precarious nests of falcons, looking down at the hidden palace of the River God. My two guests could not follow me. I let out a long piercing cry. Trees and grasses shook; the mountains rang, the valleys echoed; wind arose and waves rushed. I too became quietly sorrowful, solemnly fearful; a chill came over me — the place could not be stayed in.</rdg><rdg wit="#wit-owen">I tucked up my robe and climbed, treading over rugged crags, parting tangled growth, squatting on rocks shaped like tigers and leopards, climbing trees twisted like dragons, pulling myself up to the perilous nests of falcons, looking down on the dark palace of the River Lord Pingyi. My two guests could not follow. I let out a long, sharp cry; grass and trees trembled; mountains answered, valleys resounded; wind rose and waters surged. I too grew quietly sad, felt a solemn dread; there was a chill that would not let me stay.</rdg></app></p>
+
+          
+          <p xml:id="R2P5">
+            <app xml:id="app-para-R2P5"><lem wit="#su-shi-original">返而登舟，放乎中流，聽其所止而休焉。時夜將半，四顧寂寥。適有孤鶴，橫江東來，翅如車輪，玄裳縞衣，戛然長鳴，掠予舟而西去。</lem><rdg wit="#wit-watson">I went back and got in the boat, letting it drift into the centre of the stream, letting it stop wherever it chose, and resting there. By now it was nearly midnight; all around was desolate and still. A lone crane came flying across the river from the east. Its wings were like cartwheels; its black and white plumage gleamed. It screamed and, skimming past my boat, flew off to the west.</rdg><rdg wit="#wit-owen">I returned and got into the boat, set it adrift in midstream, and let it come to rest wherever it would. By now the night was nearly half done; all around was desolate and silent. A solitary crane came flying from the east across the river. Its wings were like cartwheels; its robe was black, its shirt white; it uttered a long, piercing cry and swept past my boat heading westward.</rdg></app></p>
+
+          
+          <p xml:id="R2P6">
+            <app xml:id="app-para-R2P6"><lem wit="#su-shi-original">予亦就睡，夢一道士，羽衣蹁躚，過臨皋之下，揖予而言曰：「赤壁之游樂乎？」問其姓名，俯而不答。「嗚呼！噫嘻！我知之矣。疇昔之夜，飛鳴而過我者，非子也邪？」道士顧笑，予亦驚寤。開戶視之，不見其處。</lem><rdg wit="#wit-watson">Before long I went to sleep and dreamed of a Taoist priest wearing a feathery robe, fluttering and dancing. He passed below Linggao, bowed to me and said: "Was the Red Cliff journey enjoyable?" I asked his name; he bowed his head and did not answer. "Ah! I know! Was it not you that last night flew crying past my boat?" The priest looked back and laughed. I woke up startled and opened the door to look. There was nothing there.</rdg><rdg wit="#wit-owen">Before long I went to sleep and dreamed of a Daoist priest in feathered robes, fluttering and light. He passed below Linggao, bowed to me, and said: "Was the Red Cliff journey enjoyable?" I asked his name; he bowed his head and did not answer. "Ah! I know! Was it not you that last night flew crying past my boat?" The priest looked back and smiled. I woke suddenly with a start, opened the door and looked out — there was nothing there.</rdg></app></p>
+        </div>
+
+      </div>
+    </body>
+
+    
+    
+    
+    <back>
+      <div type="translation-notes">
+        <head>Translation Reference Notes</head>
+        <note type="editorial" xml:lang="en">
+          Two English translations are referenced in this edition. Full translations are
+          not reproduced here due to copyright; the notes below record the bibliographic
+          reference for each. Passage-level translation notes are encoded inline using
+          &lt;note type="translation" resp="#watson"&gt; and &lt;note type="translation" resp="#owen"&gt;
+          elements at the relevant paragraphs.
+        </note>
+        <listBibl>
+          <bibl xml:id="watson-ref">
+            <author ref="#watson">Watson, Burton</author>
+            <title level="m">Su Tung-p'o: Selections from a Sung Dynasty Poet</title>
+            <publisher>Columbia University Press</publisher>
+            <date>1965</date>
+            <note>First Rhapsody: pp. 87–91. Second Rhapsody: pp. 92–95.</note>
+          </bibl>
+          <bibl xml:id="owen-ref">
+            <author ref="#owen">Owen, Stephen</author>
+            <title level="m">An Anthology of Chinese Literature: Beginnings to 1911</title>
+            <publisher>W. W. Norton</publisher>
+            <date>1996</date>
+            <note>First Rhapsody: pp. 590–594. Second Rhapsody: pp. 594–597.</note>
+          </bibl>
+        </listBibl>
+      </div>
+
+      <div type="bibliography">
+        <head>Bibliography</head>
+        <listBibl>
+          <head>Primary Texts</head>
+          <bibl xml:id="ctext-first">
+            <author ref="#SuShi">Su Shi</author>
+            <title xml:lang="zh-Hant">前赤壁賦</title>
+            <title xml:lang="en">First Red Cliff Rhapsody</title>
+            <date>1082</date>
+            <ptr target="https://ctext.org/su-shi/qian-chi-bi-fu" />
+          </bibl>
+          <bibl xml:id="ctext-second">
+            <author ref="#SuShi">Su Shi</author>
+            <title xml:lang="zh-Hant">後赤壁賦</title>
+            <title xml:lang="en">Second Red Cliff Rhapsody</title>
+            <date>1082</date>
+            <ptr target="https://ctext.org/su-shi/hou-chi-bi-fu" />
+          </bibl>
+          <bibl xml:id="npm-manuscript">
+            <title xml:lang="zh-Hant">宋蘇軾書前赤壁賦卷</title>
+            <title xml:lang="en">Former Ode on the Red Cliff (autograph handscroll)</title>
+            <institution>National Palace Museum, Taipei</institution>
+            <idno>故畫000882</idno>
+            <note>CC BY 4.0 @ www.npm.gov.tw</note>
+            <ptr target="https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid=882&amp;dept=P" />
+          </bibl>
+        </listBibl>
+        <listBibl>
+          <head>DSE Theory and Methodology</head>
+          <bibl xml:id="burghart-2017">
+            <author>Burghart, Marjorie</author>
+            <title level="m">Creating a Digital Scholarly Edition with the Text Encoding Initiative</title>
+            <publisher>DEMM</publisher>
+            <date>2017</date>
+          </bibl>
+          <bibl xml:id="dillen-2021">
+            <author>Dillen, Wout et al.</author>
+            <title level="a">Editor's Preface</title>
+            <title level="j">Variants</title>
+            <biblScope>15–16</biblScope>
+            <date>2021</date>
+            <title level="m">Textual Scholarship in the Twenty-First Century</title>
+          </bibl>
+          <bibl xml:id="shillingsburg-2013">
+            <author>Shillingsburg, Peter</author>
+            <title level="a">Development principles for virtual archives and editions</title>
+            <title level="j">Variants</title>
+            <date>2013</date>
+          </bibl>
+          <bibl xml:id="italia-2024">
+            <author>Italia, Paola</author>
+            <title level="a">Digital Editing</title>
+            <title level="m">The Oxford Handbook of Italian Literature</title>
+            <date>2024</date>
+          </bibl>
+          <bibl xml:id="tei-p5">
+            <title level="m">TEI P5: Guidelines for Electronic Text Encoding and Interchange</title>
+            <publisher>Text Encoding Initiative Consortium</publisher>
+            <ptr target="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html" />
+          </bibl>
+        </listBibl>
+      </div>
+    </back>
+  </text>
+
+</TEI>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bibliography — 前後赤壁賦 DSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #1c1812;
+      --paper:     #f7f4ed;
+      --paper-2:   #ede8db;
+      --border:    #d6c9a4;
+      --gold:      #a0722a;
+      --gold-hi:   #c8941e;
+      --gold-pale: #f5edd4;
+      --font-zh:   'Noto Serif TC', serif;
+      --font-en:   'EB Garamond', Georgia, serif;
+      --font-ui:   'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--font-en); min-height: 100vh; }
+
+    /* ── Navbar ── */
+    nav { background: var(--ink); padding: 0 2.5rem; display: flex; align-items: center; gap: 2rem; height: 50px; position: sticky; top: 0; z-index: 200; }
+    .nav-brand { font-family: var(--font-zh); font-size: .95rem; color: var(--gold-hi); white-space: nowrap; }
+    nav a { font-family: var(--font-ui); font-size: .8rem; color: #aaa; text-decoration: none; letter-spacing: .04em; transition: color .15s; }
+    nav a:hover { color: #fff; }
+    nav a.active { color: #fff; border-bottom: 2px solid var(--gold-hi); padding-bottom: 2px; }
+
+    /* ── Page ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+
+    /* ── Page header ── */
+    .page-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 2px solid var(--gold); }
+    .page-header h1 {
+      font-family: var(--font-zh);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: .3rem;
+    }
+    .page-header .en-title {
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      color: #999;
+      margin-bottom: 1.2rem;
+    }
+    .page-header p {
+      font-family: var(--font-en);
+      font-size: .95rem;
+      line-height: 1.85;
+      color: #3a3525;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 3rem; }
+    .section:last-child { margin-bottom: 0; }
+
+    .sec-number {
+      font-family: var(--font-ui);
+      font-size: .6rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: #ccc;
+      margin-bottom: .4rem;
+    }
+    .sec-head {
+      font-family: var(--font-ui);
+      font-size: .85rem;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: .03em;
+      margin-bottom: .15rem;
+    }
+    .sec-sub {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      color: #aaa;
+      margin-bottom: 1.2rem;
+    }
+    .sec-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── MLA entries ── */
+    .bib-list {
+      list-style: none;
+      counter-reset: bib;
+    }
+    .bib-entry {
+      font-family: var(--font-en);
+      font-size: .95rem;
+      line-height: 1.85;
+      color: #3a3525;
+      padding: 1rem 0 1rem 2.5rem;
+      text-indent: -2.5rem;
+      border-bottom: 1px solid #ebe5d5;
+    }
+    .bib-entry:last-child { border-bottom: none; }
+    .bib-entry .zh { font-family: var(--font-zh); font-size: .9rem; }
+    .bib-entry em { font-style: italic; }
+    .bib-entry a {
+      color: var(--gold);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .bib-entry a:hover { text-decoration: underline; }
+
+    /* ── Annotation badge (for primary/secondary) ── */
+    .bib-badge {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: .58rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: .12rem .5rem;
+      border-radius: 3px;
+      margin-left: .4rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+      text-indent: 0;
+      white-space: nowrap;
+    }
+    .bib-badge.ms   { background: #fdf3e0; color: #a07020; }
+    .bib-badge.text  { background: #e8f5ed; color: #3d7a48; }
+    .bib-badge.trans { background: #eaedfa; color: #4a5faa; }
+
+    /* ── Subsection divider ── */
+    .sub-divider {
+      margin: 2rem 0 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--border);
+    }
+    .sub-head {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Editorial notes ── */
+    .callout {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .callout:last-child { margin-bottom: 0; }
+    .callout-head {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold);
+      margin-bottom: .5rem;
+    }
+    .callout p {
+      font-family: var(--font-en);
+      font-size: .92rem;
+      line-height: 1.8;
+      color: #555;
+    }
+    .callout p + p { margin-top: .5rem; }
+    .callout strong { color: var(--ink); }
+    .callout .zh { font-family: var(--font-zh); font-size: .88rem; }
+
+    /* ── Colophon ── */
+    .colophon {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 2px solid var(--border);
+      text-align: center;
+    }
+    .colophon p {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      line-height: 1.7;
+      color: #aaa;
+    }
+    .colophon a { color: var(--gold); text-decoration: none; }
+    .colophon a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .page { padding: 2rem 1.5rem 3rem; }
+      .bib-entry { padding-left: 1.8rem; text-indent: -1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">前後赤壁賦 DSE</span>
+  <a href="index.html">Home</a>
+  <a href="manuscript.html">Manuscript</a>
+  <a href="evt2-beta2.1/index.html">EVT</a>
+  <a href="texts.html">Texts</a>
+  <a href="images.html">Five Images</a>
+  <a href="bibliography.html" class="active">Bibliography</a>
+</nav>
+
+<div class="page">
+
+<!-- ── Page header ── -->
+<div class="page-header">
+  <h1>參考文獻與編輯說明</h1>
+  <div class="en-title">Bibliography &amp; Editorial Notes</div>
+  <p>
+    All references follow MLA format (9th edition). Sources are divided into
+    <strong>primary sources</strong> — the original texts, manuscript, and English translations
+    that constitute the edition's base materials — and <strong>secondary sources</strong> —
+    the scholarly literature on digital editing theory, methodology, and interpretation that
+    informs the edition's design decisions.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 1 — PRIMARY SOURCES
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">I</div>
+  <div class="sec-head">Primary Sources</div>
+  <div class="sec-sub">Original texts, manuscript witness, and English translations</div>
+  <div class="sec-divider"></div>
+
+  <!-- ── 1a. Original Texts ── -->
+  <div class="sub-head">Original Texts</div>
+
+  <ul class="bib-list">
+
+    <li class="bib-entry">
+      Su Shi (<span class="zh">蘇軾</span>).
+      "<span class="zh">前赤壁賦</span>" ["First Red Cliff Rhapsody"].
+      1082. <em>Chinese Text Project</em> (ctext.org),
+      <a href="https://ctext.org/su-shi/qian-chi-bi-fu" target="_blank" rel="noopener">ctext.org/su-shi/qian-chi-bi-fu</a>.
+      <span class="bib-badge text">Text</span>
+    </li>
+
+    <li class="bib-entry">
+      Su Shi (<span class="zh">蘇軾</span>).
+      "<span class="zh">後赤壁賦</span>" ["Second Red Cliff Rhapsody"].
+      1082. <em>Chinese Text Project</em> (ctext.org),
+      <a href="https://ctext.org/su-shi/hou-chi-bi-fu" target="_blank" rel="noopener">ctext.org/su-shi/hou-chi-bi-fu</a>.
+      <span class="bib-badge text">Text</span>
+    </li>
+
+  </ul>
+
+  <!-- ── 1b. Manuscript ── -->
+  <div class="sub-divider"></div>
+  <div class="sub-head">Manuscript Witness</div>
+
+  <ul class="bib-list">
+
+    <li class="bib-entry">
+      Su Shi (<span class="zh">蘇軾</span>).
+      <span class="zh">宋蘇軾書前赤壁賦卷</span>
+      [<em>Former Ode on the Red Cliff</em>: Autograph Handscroll].
+      1082. Ink on paper, 23.9 × 258 cm. National Palace Museum, Taipei,
+      acc. no. <span class="zh">故畫</span>000882. CC BY 4.0.
+      IIIF access:
+      <a href="https://digitalarchive.npm.gov.tw/Collection/Detail/882?dep=P" target="_blank" rel="noopener">digitalarchive.npm.gov.tw/Collection/Detail/882?dep=P</a>.
+      <span class="bib-badge ms">Manuscript</span>
+    </li>
+
+  </ul>
+
+  <!-- ── 1c. Translations ── -->
+  <div class="sub-divider"></div>
+  <div class="sub-head">English Translations</div>
+
+  <ul class="bib-list">
+
+    <li class="bib-entry">
+      Watson, Burton.
+      <em>Su Tung-p'o: Selections from a Sung Dynasty Poet</em>.
+      Columbia UP, 1965, pp. 87–95.
+      <span class="bib-badge trans">Translation</span>
+    </li>
+
+    <li class="bib-entry">
+      Owen, Stephen.
+      "The Red Cliff, I" and "The Red Cliff, II."
+      <em>An Anthology of Chinese Literature: Beginnings to 1911</em>,
+      W. W. Norton, 1996, pp. 590–97.
+      <span class="bib-badge trans">Translation</span>
+    </li>
+
+  </ul>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 2 — SECONDARY SOURCES
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">II</div>
+  <div class="sec-head">Secondary Sources</div>
+  <div class="sec-sub">DSE theory, methodology, and digital humanities scholarship</div>
+  <div class="sec-divider"></div>
+
+  <ul class="bib-list">
+
+    <li class="bib-entry">
+      Burghart, Marjorie.
+      <em>Creating a Digital Scholarly Edition with the Text Encoding Initiative</em>.
+      DEMM (Digital Editing of Medieval Manuscripts), 2017,
+      <a href="https://ec.europa.eu/programmes/erasmus-plus/project-result-content/cfb03c8e-6765-477e-aa4d-e2b162f57068/IO2_Creating%20a%20digital%20edition%20with%20the%20TEI.pdf" target="_blank" rel="noopener">ec.europa.eu [PDF]</a>.
+    </li>
+
+    <li class="bib-entry">
+      Italia, Paola.
+      "Digital Editing."
+      <em>The Oxford Handbook of Italian Literature</em>,
+      edited by Stefano Jossa, Oxford UP, 2024,
+      <a href="https://academic.oup.com/edited-volume/58209/chapter-abstract/520234244" target="_blank" rel="noopener">academic.oup.com</a>.
+    </li>
+
+    <li class="bib-entry">
+      Text Encoding Initiative Consortium.
+      <em>TEI P5: Guidelines for Electronic Text Encoding and Interchange</em>.
+      Chapter 12: "Critical Apparatus."
+      <a href="https://www.tei-c.org/release/doc/tei-p5-doc/en/html/TC.html" target="_blank" rel="noopener">tei-c.org/release/doc/tei-p5-doc/en/html/TC.html</a>.
+    </li>
+
+  </ul>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 3 — TOOLS & PLATFORMS
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">III</div>
+  <div class="sec-head">Tools &amp; Platforms</div>
+  <div class="sec-sub">Software, standards, and digital infrastructure used in this edition</div>
+  <div class="sec-divider"></div>
+
+  <ul class="bib-list">
+
+    <li class="bib-entry">
+      <em>Chinese Text Project</em> (<span class="zh">中國哲學書電子化計劃</span>).
+      Directed by Donald Sturgeon. <a href="https://ctext.org" target="_blank" rel="noopener">ctext.org</a>.
+      Digital library of pre-modern Chinese texts. Source of the base text for both rhapsodies.
+    </li>
+
+    <li class="bib-entry">
+      <em>Edition Visualization Technology</em> (EVT).
+      Developed by Roberto Rosselli Del Turco et al., Università di Torino / Università di Pisa.
+      <a href="https://evt.labcd.unipi.it" target="_blank" rel="noopener">evt.labcd.unipi.it</a>.
+      Platform for rendering TEI-encoded digital scholarly editions.
+    </li>
+
+    <li class="bib-entry">
+      <em>International Image Interoperability Framework</em> (IIIF).
+      <a href="https://iiif.io" target="_blank" rel="noopener">iiif.io</a>.
+      Standard for delivering high-resolution images. Used to embed the National Palace Museum manuscript.
+    </li>
+
+    <li class="bib-entry">
+      National Palace Museum (<span class="zh">國立故宮博物院</span>), Taipei.
+      <em>Digital Archives Open Data</em>. CC BY 4.0.
+      <a href="https://digitalarchive.npm.gov.tw" target="_blank" rel="noopener">digitalarchive.npm.gov.tw</a>.
+      Source of IIIF manifest and images for the autograph handscroll.
+    </li>
+
+    <li class="bib-entry">
+      <em>Oxygen XML Editor</em>.
+      SyncRO Soft SRL.
+      <a href="https://www.oxygenxml.com" target="_blank" rel="noopener">oxygenxml.com</a>.
+      Used for TEI/XML encoding and validation of <code>redcliff.xml</code>.
+    </li>
+
+  </ul>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 4 — EDITORIAL NOTES
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">IV</div>
+  <div class="sec-head">Editorial Notes</div>
+  <div class="sec-sub">Decisions, conventions, and scholarly justifications</div>
+  <div class="sec-divider"></div>
+
+  <div class="callout">
+    <div class="callout-head">Note on the Wen Zhengming supplement</div>
+    <p>
+      The first 36 characters of the autograph handscroll (National Palace Museum, acc. no.
+      <span class="zh">故畫</span>000882) are <strong>not in Su Shi's hand</strong>.
+      The original opening of the scroll was damaged at an unknown date after Su Shi's death.
+      The missing text was supplied by the Ming-dynasty calligrapher
+      <strong>Wen Zhengming</strong> (<span class="zh">文徵明</span>, 1470–1559),
+      one of the most celebrated calligraphers of his era. Wen's hand is visibly different
+      from Su Shi's — more delicate and regular, in contrast to Su Shi's bold, idiosyncratic
+      brushwork. This supplement is flagged throughout the edition: on the
+      <a href="manuscript.html" style="color:var(--gold)">Manuscript</a> page, the first tile
+      carries a warning badge, and the sidebar explains the circumstances of the supplement.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Note on the translation of 賦 as "Rhapsody"</div>
+    <p>
+      The genre <span class="zh">賦</span> (<em>fù</em>) has been translated variously
+      as "ode," "prose-poem," "rhapsody," and "poetic exposition." This edition uses
+      <strong>"Rhapsody"</strong>, following the convention established by David R. Knechtges
+      in his translations of Han-dynasty <em>fu</em>. The term captures the genre's
+      characteristic features: extended length, a mixture of rhythmic prose and lyrical verse,
+      elaborate imagery, and philosophical argument. "Ode" (as in the Pindaric or Horatian
+      tradition) is avoided because it implies a shorter, more unified lyric form with
+      celebratory or devotional connotations that do not apply to the <em>fu</em>.
+    </p>
+    <p>
+      Two features of the <em>fu</em> are essential for reading Su Shi's texts. First, the
+      genre has a long tradition of <strong>host–guest dialogue</strong>
+      (<span class="zh">主客問答</span>, <em>zhǔ-kè wèndá</em>): a "host" and a "guest"
+      exchange arguments, with the guest raising a philosophical challenge that the host must
+      answer. This explains the structural role of "the Guest" (<span class="zh">客</span>)
+      in both Rhapsodies — he is not an incidental character but a generic requirement (see
+      the separate note on the Guest below). Second, the <em>fu</em> is a
+      <strong>performative genre</strong>, originally composed for declamation at court. Its
+      language is deliberately heightened: elaborate metaphor, sensory accumulation, and
+      rhetorical amplification are conventions of the form, not signs of excess. The vivid
+      imagery of moon, water, and wind in these texts operates within a tradition where such
+      language is the primary vehicle of philosophical argument.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Note on the scholarly debate surrounding the Guest (<span class="zh">客</span>)</div>
+    <p>
+      The figure of "the Guest" (<span class="zh">客</span>) who appears in both Rhapsodies
+      has been the subject of extensive scholarly debate. Three principal interpretations exist:
+      (1) the Guest is a real companion — a friend who accompanied Su Shi on the boat trip;
+      (2) the Guest is a literary device, a projection of Su Shi's own existential doubt,
+      following the ancient <em>fu</em> convention of host–guest dialogue
+      (<span class="zh">主客問答</span>);
+      (3) the Guest is deliberately ambiguous — both real and symbolic, a figure whose
+      ontological status is part of the text's philosophical inquiry.
+    </p>
+    <p>
+      This edition <strong>does not resolve the question</strong>. Instead, the annotation
+      system encodes multiple interpretive layers: each occurrence of
+      <span class="zh">客</span> is tagged, and the editorial notes present all three readings
+      without privileging one over another. The
+      <a href="images.html" style="color:var(--gold)">Guest tab</a> on the Five Images page
+      discusses this in full.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Note on the two English translations</div>
+    <p>
+      This edition includes two English translations:
+      <strong>Burton Watson</strong> (1965) and <strong>Stephen Owen</strong> (1996).
+      No additional translations are included. Full translations are not reproduced due to
+      copyright; only passage-level excerpts appear in the annotation layer.
+    </p>
+    <p>
+      The two translators represent fundamentally different approaches to classical Chinese.
+      <strong>Watson</strong>, working in the mid-century Columbia tradition of Arthur Waley
+      and Donald Keene, prioritises <strong>fluency and literary impact</strong> in English.
+      His sentences are rhythmically polished, his vocabulary vivid, and his phrasing designed
+      to read as natural English prose. The cost of this fluency is that Watson sometimes
+      resolves ambiguities that the original leaves open: where the Chinese is compressed or
+      syntactically strange, Watson tends to expand and clarify. His
+      <span class="zh">山高月小</span> becomes "the mountains were tall and the moon
+      <em>tiny</em>" — an intensification that makes the emotional register immediately legible
+      to an English reader, but one that goes beyond what the Chinese literally says.
+    </p>
+    <p>
+      <strong>Owen</strong>, writing three decades later as a scholar of Chinese poetics at
+      Harvard, prioritises <strong>structural fidelity and interpretive restraint</strong>. His
+      translations preserve the parallelism, compression, and syntactic ambiguity of classical
+      Chinese, even at the expense of English fluency. The same four characters become "the
+      mountains were high and the moon <em>small</em>" — a rendering that maintains the balanced
+      two-character-per-clause parallelism (山高 / 月小) and lets the reader feel the
+      understatement rather than having the emotion amplified. Where Watson interprets, Owen
+      often holds back — reproducing the original's openness rather than resolving it.
+    </p>
+    <p>
+      The decision to include both is an <strong>editorial argument</strong>, not a courtesy.
+      By placing Watson and Owen side by side beneath the same Chinese passage, this edition
+      makes visible the <em>interpretive gap</em> that every act of translation must cross.
+      The reader sees, concretely, that the "same" text produces different emotional effects
+      depending on the translator's philosophy — and begins to understand that translation is
+      itself a form of scholarly interpretation. The
+      <a href="images.html" style="color:var(--gold)">Five Images</a> page includes specific
+      translation notes wherever Watson and Owen diverge in ways that affect the emotional
+      register of the five core images.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">Note on manuscript coverage</div>
+    <p>
+      The <a href="manuscript.html" style="color:var(--gold)">Manuscript</a> page displays
+      only the <strong>First Red Cliff Rhapsody</strong>. No autograph manuscript of the
+      Second Red Cliff Rhapsody is known to survive. The Second Rhapsody exists only in later
+      transcriptions and printed editions.
+    </p>
+  </div>
+
+</div>
+
+
+<!-- ── Colophon ── -->
+<div class="colophon">
+  <p>
+    <span class="zh" style="font-size:.85rem;color:#bbb;">前後赤壁賦</span> ·
+    A Digital Scholarly Edition
+  </p>
+  <p>
+    Edited by Lin Zizhe · Università di Bologna ·
+    Digital Scholarly Editing, Prof. Paola Italia · A.A. 2025–2026
+  </p>
+  <p>
+    Editorial notes and TEI encoding © Lin Zizhe, 2026.
+    Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>.
+    Primary text is in the public domain (composed 1082 CE).
+  </p>
+  <p>
+    Manuscript images: National Palace Museum, Taipei · CC BY 4.0 ·
+    <a href="https://www.npm.gov.tw" target="_blank" rel="noopener">www.npm.gov.tw</a>
+  </p>
+</div>
+
+</div><!-- /.page -->
+
+</body>
+</html>

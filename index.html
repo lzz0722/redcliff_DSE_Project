@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>前後赤壁賦 — Digital Scholarly Edition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #1c1812;
+      --paper:     #f7f4ed;
+      --paper-2:   #ede8db;
+      --border:    #d6c9a4;
+      --gold:      #a0722a;
+      --gold-hi:   #c8941e;
+      --gold-pale: #f5edd4;
+      --ha-line:   #3d8b55; --ha-bg: #e8f5ed;
+      --te-line:   #b08020; --te-bg: #faf2d8;
+      --es-line:   #4a5faa; --es-bg: #eaedfa;
+      --un-line:   #944070; --un-bg: #fae8f2;
+      --font-zh:   'Noto Serif TC', serif;
+      --font-en:   'EB Garamond', Georgia, serif;
+      --font-ui:   'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--font-en); min-height: 100vh; }
+
+    /* ── Navbar ── */
+    nav { background: var(--ink); padding: 0 2.5rem; display: flex; align-items: center; gap: 2rem; height: 50px; position: sticky; top: 0; z-index: 200; }
+    .nav-brand { font-family: var(--font-zh); font-size: .95rem; color: var(--gold-hi); white-space: nowrap; }
+    nav a { font-family: var(--font-ui); font-size: .8rem; color: #aaa; text-decoration: none; letter-spacing: .04em; transition: color .15s; }
+    nav a:hover { color: #fff; }
+    nav a.active { color: #fff; border-bottom: 2px solid var(--gold-hi); padding-bottom: 2px; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--ink);
+      color: #e8e0d0;
+      padding: 5rem 2.5rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '前赤壁賦　後赤壁賦';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-zh);
+      font-size: 8rem;
+      font-weight: 300;
+      color: rgba(160,114,42,.06);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: .3em;
+    }
+    .hero-zh {
+      font-family: var(--font-zh);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--gold-hi);
+      letter-spacing: .15em;
+      margin-bottom: .5rem;
+    }
+    .hero-en {
+      font-family: var(--font-en);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: #c8b890;
+      font-style: italic;
+      margin-bottom: .6rem;
+    }
+    .hero-sub {
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      color: #7a7060;
+      letter-spacing: .06em;
+      margin-bottom: 2.2rem;
+    }
+    .hero-rq {
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: var(--font-en);
+      font-size: 1.08rem;
+      line-height: 1.85;
+      color: #bbb0a0;
+      font-style: italic;
+    }
+    .hero-rq strong { color: var(--gold-hi); font-weight: 500; font-style: normal; }
+
+    /* ── Page container ── */
+    .page { max-width: 860px; margin: 0 auto; padding: 3rem 2.5rem 5rem; }
+
+    /* ── Section styling ── */
+    .section { margin-bottom: 3.5rem; }
+    .section:last-child { margin-bottom: 0; }
+
+    .sec-number {
+      font-family: var(--font-ui);
+      font-size: .6rem;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: #ccc;
+      margin-bottom: .4rem;
+    }
+    .sec-head-zh {
+      font-family: var(--font-zh);
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: .15rem;
+    }
+    .sec-head-en {
+      font-family: var(--font-ui);
+      font-size: .75rem;
+      color: #aaa;
+      letter-spacing: .04em;
+      margin-bottom: 1.4rem;
+    }
+    .sec-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── Prose ── */
+    .prose {
+      font-family: var(--font-en);
+      font-size: 1.02rem;
+      line-height: 1.95;
+      color: #3a3525;
+    }
+    .prose + .prose { margin-top: 1rem; }
+    .prose .zh { font-family: var(--font-zh); font-size: .95rem; }
+    .prose em { font-style: italic; }
+    .prose strong { font-weight: 600; color: var(--ink); }
+
+    /* ── Info card (for Su Shi bio facts) ── */
+    .bio-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .5rem 1.2rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.6rem;
+      margin: 1.5rem 0;
+    }
+    .bio-card dt {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #aaa;
+      padding-top: .15rem;
+      white-space: nowrap;
+    }
+    .bio-card dd {
+      font-family: var(--font-en);
+      font-size: .95rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .bio-card dd .zh { font-family: var(--font-zh); font-size: .88rem; }
+
+    /* ── Callout box ── */
+    .callout {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 1.3rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout-head {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold);
+      margin-bottom: .6rem;
+    }
+    .callout p {
+      font-family: var(--font-en);
+      font-size: .92rem;
+      line-height: 1.8;
+      color: #555;
+    }
+    .callout p + p { margin-top: .5rem; }
+    .callout strong { color: var(--ink); }
+
+    /* ── Two-column contrast card ── */
+    .contrast {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 1.8rem 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .contrast-col {
+      padding: 1.4rem 1.5rem;
+    }
+    .contrast-col:first-child {
+      background: #fff;
+      border-right: 1px solid var(--border);
+    }
+    .contrast-col:last-child {
+      background: #faf8f2;
+    }
+    .contrast-col h4 {
+      font-family: var(--font-zh);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gold);
+      margin-bottom: .15rem;
+    }
+    .contrast-col .sub {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      color: #aaa;
+      margin-bottom: .8rem;
+    }
+    .contrast-col .date {
+      font-family: var(--font-en);
+      font-size: .82rem;
+      color: #bbb;
+      font-style: italic;
+      margin-bottom: .7rem;
+    }
+    .contrast-col p {
+      font-family: var(--font-en);
+      font-size: .9rem;
+      line-height: 1.8;
+      color: #3a3525;
+    }
+    .contrast-reg {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      font-weight: 500;
+      padding: .15rem .6rem;
+      border-radius: 10px;
+      margin-top: .7rem;
+    }
+    .contrast-reg.ha { background: var(--ha-bg); color: var(--ha-line); }
+    .contrast-reg.te { background: var(--te-bg); color: var(--te-line); }
+    .contrast-reg.es { background: var(--es-bg); color: var(--es-line); }
+    .contrast-reg.un { background: var(--un-bg); color: var(--un-line); }
+
+    /* ── Feature cards (what the DSE does) ── */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .feat {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.3rem;
+      transition: border-color .2s;
+    }
+    .feat:hover { border-color: var(--gold); }
+    .feat-icon {
+      font-size: 1.4rem;
+      margin-bottom: .5rem;
+    }
+    .feat h4 {
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: .4rem;
+    }
+    .feat p {
+      font-family: var(--font-ui);
+      font-size: .75rem;
+      line-height: 1.6;
+      color: #777;
+    }
+    .feat-link {
+      display: inline-block;
+      margin-top: .6rem;
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .feat-link:hover { text-decoration: underline; }
+
+    /* ── Manuscript preview ── */
+    .ms-preview {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      background: var(--ink);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin: 1.8rem 0;
+      color: #c8c0b0;
+    }
+    .ms-preview img {
+      width: 280px;
+      height: auto;
+      border: 1px solid #3a3020;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .ms-preview-text {
+      flex: 1;
+    }
+    .ms-preview-text h4 {
+      font-family: var(--font-zh);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gold-hi);
+      margin-bottom: .6rem;
+    }
+    .ms-preview-text p {
+      font-size: .88rem;
+      line-height: 1.75;
+      color: #a09888;
+      margin-bottom: .7rem;
+    }
+    .ms-preview-text .ms-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-family: var(--font-ui);
+      font-size: .78rem;
+      color: var(--gold-hi);
+      text-decoration: none;
+      border: 1px solid rgba(160,114,42,.3);
+      padding: .35rem .9rem;
+      border-radius: 3px;
+      transition: all .15s;
+    }
+    .ms-preview-text .ms-link:hover {
+      background: rgba(160,114,42,.1);
+      border-color: var(--gold-hi);
+    }
+    .ms-attr {
+      font-family: var(--font-ui);
+      font-size: .65rem;
+      color: #666;
+      margin-top: .8rem;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      margin: 1.5rem 0;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: var(--border);
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 1.3rem;
+      padding-left: .8rem;
+    }
+    .tl-item:last-child { margin-bottom: 0; }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--paper);
+    }
+    .tl-item.highlight::before {
+      background: var(--gold);
+    }
+    .tl-year {
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: .15rem;
+    }
+    .tl-text {
+      font-family: var(--font-en);
+      font-size: .9rem;
+      line-height: 1.7;
+      color: #555;
+    }
+    .tl-text .zh { font-family: var(--font-zh); font-size: .85rem; }
+
+    /* ── Quote block ── */
+    .quote-block {
+      border-left: 3px solid var(--gold);
+      padding: 1rem 1.4rem;
+      margin: 1.5rem 0;
+      background: rgba(160,114,42,.04);
+      border-radius: 0 4px 4px 0;
+    }
+    .quote-block .zh-quote {
+      font-family: var(--font-zh);
+      font-size: 1.1rem;
+      line-height: 2.2;
+      color: var(--ink);
+      margin-bottom: .5rem;
+    }
+    .quote-block .en-quote {
+      font-family: var(--font-en);
+      font-size: .92rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: #666;
+      margin-bottom: .3rem;
+    }
+    .quote-block .quote-src {
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      color: #aaa;
+    }
+
+    /* ── Five-image tags ── */
+    .image-tags {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      margin: 1.2rem 0;
+    }
+    .img-tag {
+      display: flex;
+      align-items: center;
+      gap: .35rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: .3rem .85rem .3rem .6rem;
+      font-family: var(--font-ui);
+      font-size: .75rem;
+      color: #555;
+    }
+    .img-tag .char {
+      font-family: var(--font-zh);
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .hero { padding: 3rem 1.5rem 2.5rem; }
+      .hero-zh { font-size: 1.6rem; }
+      .hero-en { font-size: 1.1rem; }
+      .page { padding: 2rem 1.5rem 3rem; }
+      .contrast { grid-template-columns: 1fr; }
+      .contrast-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .features { grid-template-columns: 1fr; }
+      .ms-preview { flex-direction: column; }
+      .ms-preview img { width: 100%; }
+      .bio-card { grid-template-columns: 1fr; gap: .2rem .8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">前後赤壁賦 DSE</span>
+  <a href="index.html" class="active">Home</a>
+  <a href="manuscript.html">Manuscript</a>
+  <a href="evt2-beta2.1/index.html">EVT</a>
+  <a href="texts.html">Texts</a>
+  <a href="images.html">Five Images</a>
+  <a href="bibliography.html">Bibliography</a>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+     ════════════════════════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-zh">前後赤壁賦</div>
+  <div class="hero-en">The First and Second Red Cliff Rhapsodies</div>
+  <div class="hero-sub">Su Shi · 蘇軾 · Huangzhou, 1082 · A Digital Scholarly Edition</div>
+  <p class="hero-rq">
+    How do five recurring images — <strong>moon</strong> (月), <strong>water</strong> (水),
+    <strong>wind</strong> (風), <strong>Red Cliff</strong> (赤壁), and <strong>the Guest</strong> (客)
+    — shift in emotional register between Su Shi's two Red Cliff Rhapsodies of 1082,
+    and how can a Digital Scholarly Edition make this transformation visible?
+  </p>
+</div>
+
+<div class="page">
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 1 — WHO IS SU SHI
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">I</div>
+  <div class="sec-head-zh">蘇軾其人</div>
+  <div class="sec-head-en">Who Is Su Shi?</div>
+  <div class="sec-divider"></div>
+
+  <p class="prose">
+    Su Shi (<span class="zh">蘇軾</span>, 1037–1101), also known by his courtesy name Zizhan
+    (<span class="zh">子瞻</span>) and his literary sobriquet Dongpo (<span class="zh">東坡</span>,
+    "Eastern Slope"), is one of the most celebrated figures in the Chinese literary tradition.
+    He lived during the Northern Song dynasty (<span class="zh">北宋</span>, 960–1127),
+    a period of exceptional cultural refinement in Chinese history — an era of landscape painting,
+    printed books, Neo-Confucian philosophy, and a civil service governed by scholar-officials
+    who were poets, painters, and calligraphers as much as they were administrators.
+  </p>
+
+  <dl class="bio-card">
+    <dt>Full name</dt>    <dd><span class="zh">蘇軾</span> Sū Shì</dd>
+    <dt>Courtesy</dt>     <dd><span class="zh">子瞻</span> Zǐzhān</dd>
+    <dt>Sobriquet</dt>    <dd><span class="zh">東坡居士</span> Dōngpō Jūshì — "The Retired Scholar of the Eastern Slope," adopted during his Huangzhou exile</dd>
+    <dt>Dates</dt>        <dd>1037–1101 CE</dd>
+    <dt>Dynasty</dt>      <dd>Northern Song (<span class="zh">北宋</span>), 960–1127</dd>
+    <dt>Birthplace</dt>   <dd>Meishan (<span class="zh">眉山</span>), present-day Sichuan Province</dd>
+    <dt>Roles</dt>        <dd>Poet, prose writer, calligrapher, painter, gastronome, engineer, political figure</dd>
+  </dl>
+
+  <p class="prose">
+    Su Shi was not simply a writer. In Song-dynasty China, the ideal of the
+    <em>literatus</em> (<span class="zh">文人</span>, <em>wenren</em>) demanded mastery across
+    multiple domains: poetry, prose, calligraphy, painting, and political governance were not
+    separate careers but facets of a single cultivated life. Su Shi excelled in all of them.
+    He is traditionally counted among the "Eight Great Prose Masters of the Tang and Song"
+    (<span class="zh">唐宋八大家</span>), and his calligraphy is regarded as among the finest
+    of his era. His poems are still memorised by schoolchildren across East Asia today.
+  </p>
+
+  <p class="prose">
+    His political career, however, was defined by repeated conflict with the reigning factions
+    at court. Su Shi refused to align fully with either the reformists (led by Wang Anshi,
+    <span class="zh">王安石</span>) or the conservatives. This independence made him enemies
+    on both sides — and led, ultimately, to the crisis that produced the Red Cliff Rhapsodies.
+  </p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 2 — THE EXILE
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">II</div>
+  <div class="sec-head-zh">烏台詩案與黃州流放</div>
+  <div class="sec-head-en">The Wutai Poetry Inquisition and the Huangzhou Exile</div>
+  <div class="sec-divider"></div>
+
+  <p class="prose">
+    In 1079, Su Shi was arrested on charges of slandering the emperor through his poetry —
+    an event known as the Wutai Poetry Inquisition (<span class="zh">烏台詩案</span>,
+    literally "the case of the Black Terrace," named after the censorate building where
+    the investigation was held). Political rivals extracted phrases from his poems and
+    reinterpreted them as veiled attacks on imperial policy. Su Shi was imprisoned in
+    the capital Bianjing (<span class="zh">汴京</span>, present-day Kaifeng) for over
+    one hundred days, during which he believed he would be executed.
+  </p>
+
+  <p class="prose">
+    He survived — narrowly — and was sentenced not to death but to exile: stripped of all
+    official posts and banished to the remote town of Huangzhou (<span class="zh">黃州</span>,
+    in present-day Hubei Province), where he was given a nominal title with no salary and
+    no administrative duties.
+  </p>
+
+  <div class="callout">
+    <div class="callout-head">Why exile mattered in Song China</div>
+    <p>
+      For a modern reader, "exile" might suggest a change of address. In Song-dynasty China,
+      it meant something far more severe. A scholar-official's entire identity — his income,
+      social standing, access to the court, and right to participate in the governing class
+      that defined an educated man's sense of self — was stripped away.
+      Exile was not prison, but it was a form of <strong>social death</strong>:
+      the exiled official became invisible to the political world he had spent his life inhabiting.
+    </p>
+    <p>
+      Crucially, exile meant severance from <strong>Bianjing</strong>
+      (<span style="font-family:var(--font-zh)">汴京</span>, present-day Kaifeng) — the Song
+      capital and the undisputed centre of Chinese civilisation. Bianjing was where policy was
+      made, where literary reputations were forged, where the court and the examination system
+      determined every scholar-official's future. To be exiled was not merely to leave a city;
+      it was to be physically cut off from the only world in which one's education, talent, and
+      life's work had meaning. There was no "remote work," no correspondence that could substitute
+      for presence at court. An exiled official could write, but he could not be read by the people
+      who mattered; he could think, but he could not act. The distance between Bianjing and
+      Huangzhou — roughly 700 kilometres of river and mountain — was, in political terms, infinite.
+    </p>
+    <p>
+      Su Shi arrived in Huangzhou impoverished and disgraced. He farmed a plot of land on the
+      "Eastern Slope" (<span style="font-family:var(--font-zh)">東坡</span>) — which gave him
+      the sobriquet by which he is best known. It was in this condition of radical loss that he
+      wrote the two Red Cliff Rhapsodies in the summer and autumn of 1082.
+    </p>
+    <p>
+      The emotional arc between the two Rhapsodies cannot be understood without this context. In
+      the First Rhapsody (July 1082), Su Shi had been in exile for over two years and had
+      actively cultivated philosophical detachment — studying Buddhism and Daoism, farming,
+      writing. The text records a moment where that strategy is working: the moon endures, the
+      river is constant, nature offers consolation that the state cannot confiscate. In the
+      Second Rhapsody (October 1082), only three months later, the same strategy appears to have
+      reached its limit. The landscape has turned cold and strange, the philosophical arguments
+      are not repeated, and the text ends not with shared wine and companionable sleep but with
+      a solitary awakening and an empty doorway. The shift from transcendence to the uncanny is
+      not arbitrary — it is the sound of a man's coping mechanism beginning to crack under the
+      weight of prolonged exile.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1037</div>
+      <div class="tl-text">Born in Meishan (<span class="zh">眉山</span>), Sichuan, into a prominent literary family</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1057</div>
+      <div class="tl-text">Passes the imperial examination (<span class="zh">進士</span>) at age 20, praised by the chief examiner Ouyang Xiu (<span class="zh">歐陽修</span>) as a once-in-a-generation talent</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1057–1079</div>
+      <div class="tl-text">Serves in various provincial and capital posts; opposes Wang Anshi's New Policies (<span class="zh">新法</span>) but also criticises the conservative faction — earning enemies on both sides</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-year">1079 · The Wutai Poetry Inquisition</div>
+      <div class="tl-text">Arrested, imprisoned for 103 days in Bianjing. Sentenced to exile in Huangzhou</div>
+    </div>
+    <div class="tl-item highlight">
+      <div class="tl-year">1082 · The Red Cliff Rhapsodies</div>
+      <div class="tl-text">Writes the First Rhapsody (<span class="zh">前赤壁賦</span>) in the seventh lunar month (≈ August) and the Second Rhapsody (<span class="zh">後赤壁賦</span>) in the tenth lunar month (≈ November)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1084</div>
+      <div class="tl-text">Recalled from exile; returns to government service, but is exiled again — twice more — before his death</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1101</div>
+      <div class="tl-text">Dies in Changzhou (<span class="zh">常州</span>) at age 64, on his way back from a final exile in Hainan Island</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 3 — THE TEXTS
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">III</div>
+  <div class="sec-head-zh">前後赤壁賦</div>
+  <div class="sec-head-en">The Two Red Cliff Rhapsodies</div>
+  <div class="sec-divider"></div>
+
+  <div class="callout">
+    <div class="callout-head">What is a 賦 (fù) — Rhapsody?</div>
+    <p>
+      The <span style="font-family:var(--font-zh)">賦</span> (<em>fù</em>) is a Chinese literary
+      genre with no exact Western equivalent. Usually translated as "rhapsody" (less accurately
+      as "ode" or "prose-poem"), it combines rhythmic prose with lyrical verse, and is
+      characterised by elaborate description, philosophical reflection, and often a dramatic
+      dialogue structure. The genre dates back to the third century BCE, but Su Shi's Red Cliff
+      Rhapsodies are considered among its greatest examples — and among the last major works
+      in the form.
+    </p>
+    <p>
+      A defining feature of the <em>fu</em> is its <strong>host–guest dialogue structure</strong>
+      (<span style="font-family:var(--font-zh)">主客問答</span>, <em>zhǔ-kè wèndá</em>).
+      Since the Han dynasty (206 BCE – 220 CE), most <em>fu</em> have been structured as a
+      conversation between a "host" (<span style="font-family:var(--font-zh)">主人</span>) and a
+      "guest" (<span style="font-family:var(--font-zh)">客</span>), in which the guest raises a
+      problem — often existential or political — and the host responds with a philosophical
+      argument. This convention directly explains why the figure of "the Guest" appears in Su
+      Shi's text: he is not an incidental companion but a structural requirement of the genre.
+      The Guest voices the despair that the host must then overcome. (Whether Su Shi's Guest is
+      a real person, a literary device, or both, remains an open scholarly question — see the
+      <a href="images.html#img-guest" style="color:var(--gold);">Guest tab</a> on the Five Images page.)
+    </p>
+    <p>
+      The <em>fu</em> is also a <strong>performative genre</strong>. It was originally composed
+      for recitation at court, and its language is deliberately heightened: elaborate metaphors,
+      extended descriptions, and rhetorical amplification are expected, not excessive. When Su
+      Shi describes the moon "lingering between the constellations" or the wind carrying the
+      boat "as if riding the void," he is working within a genre where such language is the norm.
+      A reader unfamiliar with this convention might mistake the imagery for mere ornamentation;
+      in fact, it is the genre's primary means of philosophical argument — ideas are conveyed
+      through the accumulation and transformation of images, not through abstract propositions.
+    </p>
+    <p>
+      Finally, Su Shi's two Red Cliff Rhapsodies are <strong>anomalous within the <em>fu</em>
+      tradition</strong>. Rhapsodies do not normally come in pairs. A single <em>fu</em> is a
+      self-contained performance; writing a second one on the same subject, at the same location,
+      three months later, is an act of deliberate self-revision. The Second Rhapsody is not a
+      sequel but a counter-argument — a text that reopens questions the First had appeared to
+      resolve. This pairing is what makes the Red Cliff Rhapsodies unique in Chinese literary
+      history, and it is the structural premise of this Digital Scholarly Edition.
+    </p>
+  </div>
+
+  <p class="prose">
+    In the summer and autumn of 1082, Su Shi twice visited a riverside cliff near Huangzhou that
+    he called "Red Cliff" (<span class="zh">赤壁</span>). Each visit produced a rhapsody.
+    The two texts are among the most studied works in all of Chinese literature — not least
+    because they form a rare case of <strong>authorial self-variation</strong>: the same writer
+    revisits the same site, the same themes, and the same images, yet produces two radically
+    different emotional responses.
+  </p>
+
+  <div class="callout">
+    <div class="callout-head">About Red Cliff: the Battle and the Place</div>
+    <p>
+      To understand why "Red Cliff" (<span style="font-family:var(--font-zh)">赤壁</span>) matters,
+      a non-Chinese reader needs to know one event: the <strong>Battle of Red Cliff</strong>
+      (<span style="font-family:var(--font-zh)">赤壁之戰</span>, 208 CE). At the end of the Han
+      dynasty, China fractured into rival kingdoms. The warlord Cao Cao
+      (<span style="font-family:var(--font-zh)">曹操</span>, 155–220 CE), who had unified the
+      north and commanded the largest army in China, sailed a massive fleet down the Yangzi River
+      to conquer the south. At Red Cliff, the allied southern forces of Sun Quan
+      (<span style="font-family:var(--font-zh)">孫權</span>) and Liu Bei
+      (<span style="font-family:var(--font-zh)">劉備</span>) defeated Cao Cao using a fire
+      attack — setting his fleet ablaze and ending his bid to reunify the empire. This defeat
+      sealed the division of China into the Three Kingdoms
+      (<span style="font-family:var(--font-zh)">三國</span>, 220–280 CE), one of the most
+      mythologised periods in Chinese history.
+    </p>
+    <p>
+      The cultural significance of this battle is difficult to overstate. The Three Kingdoms
+      period became the subject of China's most widely read historical novel, <em>Romance of the
+      Three Kingdoms</em> (<span style="font-family:var(--font-zh)">三國演義</span>, 14th century),
+      and its heroes — Cao Cao the cunning tyrant, Liu Bei the virtuous ruler, Zhuge Liang the
+      brilliant strategist — remain household names across East Asia today. Red Cliff is the
+      pivotal scene in this narrative: the moment where ambition overreaches and is destroyed.
+      For a rough Western analogy, imagine if the Battle of Thermopylae, Waterloo, and the fall
+      of Troy were compressed into a single event at a single identifiable location — that is
+      approximately the cultural weight "Red Cliff" carries.
+    </p>
+    <p>
+      By the Song dynasty (960–1279), nearly nine centuries after the battle, Red Cliff had become
+      a site of <strong>literary pilgrimage</strong>. Educated men
+      (<span style="font-family:var(--font-zh)">文人</span>, <em>wenren</em>) would visit the
+      site — or sites believed to be the site — to compose poems and essays reflecting on the
+      transience of military glory. This practice, known broadly as "visiting ancient sites to
+      mourn the past" (<span style="font-family:var(--font-zh)">懷古</span>, <em>huáigǔ</em>),
+      was a major literary tradition. The visitor stands where heroes once fought and died, sees
+      that nothing remains but river and cliff, and draws a philosophical lesson about
+      impermanence. Su Shi's Red Cliff Rhapsodies belong to this tradition — but, as we shall
+      see, they also subvert it.
+    </p>
+  </div>
+
+  <div class="callout" style="border-left-color: var(--es-line);">
+    <div class="callout-head" style="color: var(--es-line);">The "wrong" Red Cliff</div>
+    <p>
+      The name "Red Cliff" (<span style="font-family:var(--font-zh)">赤壁</span>) is famous in
+      Chinese history because of the Battle of Red Cliff (208 CE), a decisive naval engagement
+      in which the allied forces of Sun Quan and Liu Bei defeated the northern warlord Cao Cao
+      (<span style="font-family:var(--font-zh)">曹操</span>). This battle — one of the most
+      celebrated in Chinese military history — is the reason Su Shi invokes Cao Cao in the
+      First Rhapsody.
+    </p>
+    <p>
+      However, the cliff Su Shi visited at Huangzhou is <strong>not the actual site of the
+      ancient battle</strong>. The historical Red Cliff is believed to be some 130 kilometres
+      upstream. Su Shi almost certainly knew this. The "misidentification" is deliberate — it
+      becomes the literary premise: standing at a place that merely <em>shares the name</em>
+      of a famous battlefield, Su Shi meditates on how history fades and names outlast the
+      events they once referred to. The gap between name and reality is itself part of the
+      argument about impermanence.
+    </p>
+  </div>
+
+  <div class="contrast">
+    <div class="contrast-col">
+      <h4>前赤壁賦</h4>
+      <div class="sub">First Red Cliff Rhapsody</div>
+      <div class="date">Seventh lunar month, 1082 · a summer night</div>
+      <p>
+        Su Shi and a guest sail by moonlight on the Yangtze. The moon rises,
+        a gentle wind blows, the water is still. The guest plays a flute and
+        sings of mortality and the vanished heroes of Red Cliff. Su Shi responds
+        with a philosophical argument: the river flows on yet never disappears;
+        the moon waxes and wanes yet never truly diminishes. What seems transient
+        is, from another perspective, eternal. The two friends drink, fall asleep
+        in the boat, and wake at dawn.
+      </p>
+      <span class="contrast-reg ha">Harmony</span>
+      <span class="contrast-reg te">Tension → Resolution</span>
+    </div>
+    <div class="contrast-col">
+      <h4>後赤壁賦</h4>
+      <div class="sub">Second Red Cliff Rhapsody</div>
+      <div class="date">Tenth lunar month, 1082 · an autumn night</div>
+      <p>
+        Three months later, Su Shi returns. The landscape has changed: the water
+        is loud, the cliff is steep and strange, the trees are bare. He climbs
+        the cliff alone, hears the cry of a hawk, feels the wind as menacing.
+        That night, he dreams of a Daoist priest who transforms into a crane.
+        He wakes — and the visitor is gone. The boundary between dream and
+        waking, human and animal, self and other, has dissolved.
+      </p>
+      <span class="contrast-reg es">Estrangement</span>
+      <span class="contrast-reg un">Uncanny</span>
+    </div>
+  </div>
+
+  <p class="prose">
+    The emotional arc across the two Rhapsodies — from philosophical transcendence to dreamlike
+    estrangement — is this edition's central subject. Five images recur in both texts, but each
+    one shifts in meaning and feeling:
+  </p>
+
+  <div class="image-tags">
+    <span class="img-tag"><span class="char">月</span> Moon</span>
+    <span class="img-tag"><span class="char">水</span> Water</span>
+    <span class="img-tag"><span class="char">風</span> Wind</span>
+    <span class="img-tag"><span class="char">赤壁</span> Red Cliff</span>
+    <span class="img-tag"><span class="char">客</span> The Guest</span>
+  </div>
+
+  <p class="prose">
+    In the First Rhapsody, the moon rises as a luminous companion; in the Second, it has
+    retreated to a cold distance. Water transforms from a mirror of philosophical stillness
+    to a roaring, unsettling force. The Guest shifts from a voiced interlocutor to a spectral
+    figure who may or may not be human. The <a href="images.html"
+    style="color:var(--gold);">Five Images</a> page of this edition analyses each
+    transformation in detail.
+  </p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 4 — ABOUT THIS EDITION
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">IV</div>
+  <div class="sec-head-zh">關於本版</div>
+  <div class="sec-head-en">About This Digital Scholarly Edition</div>
+  <div class="sec-divider"></div>
+
+  <p class="prose">
+    This is a <strong>Digital Scholarly Edition</strong> (DSE): not simply a digitised text,
+    but an edition that uses the affordances of the digital medium to do things a printed book
+    cannot. Existing print editions of the Red Cliff Rhapsodies — such as Burton Watson's
+    1965 translation and Stephen Owen's 1996 anthology — present the two texts sequentially,
+    without visual comparison, without manuscript access, and without annotation of the
+    recurring imagery that constitutes the texts' central literary achievement.
+  </p>
+
+  <p class="prose">
+    This edition addresses that gap. It is encoded in TEI/XML (the scholarly standard for
+    digital text encoding) and designed to make visible the relationship between the two
+    Rhapsodies that is difficult to perceive when the texts are read in isolation.
+  </p>
+
+  <div class="features">
+    <a class="feat" href="texts.html" style="text-decoration:none;color:inherit;">
+      <div class="feat-icon">⫏</div>
+      <h4>Synoptic Reading</h4>
+      <p>Both rhapsodies displayed side by side, paragraph by paragraph, so the reader can see how themes and images correspond across the two texts.</p>
+      <span class="feat-link">Open Texts →</span>
+    </a>
+    <a class="feat" href="images.html" style="text-decoration:none;color:inherit;">
+      <div class="feat-icon">⬡</div>
+      <h4>Image Annotation</h4>
+      <p>Every occurrence of the five core images is highlighted and annotated with its emotional register, editorial commentary, and links to both Watson's and Owen's translations.</p>
+      <span class="feat-link">Open Five Images →</span>
+    </a>
+    <a class="feat" href="manuscript.html" style="text-decoration:none;color:inherit;">
+      <div class="feat-icon">卷</div>
+      <h4>Manuscript Access</h4>
+      <p>The only surviving autograph manuscript of the First Rhapsody — Su Shi's own handscroll, held at the National Palace Museum, Taipei — is viewable via IIIF, at full resolution.</p>
+      <span class="feat-link">Open Manuscript →</span>
+    </a>
+    <div class="feat">
+      <div class="feat-icon">⇄</div>
+      <h4>Translation Comparison</h4>
+      <p>Two major English translations — Watson (1965) and Owen (1996) — are togglable alongside the Traditional Chinese original, allowing the reader to see how translators interpret the same passage differently.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 5 — MANUSCRIPT PREVIEW
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">V</div>
+  <div class="sec-head-zh">手稿</div>
+  <div class="sec-head-en">The Autograph Manuscript</div>
+  <div class="sec-divider"></div>
+
+  <div class="ms-preview">
+    <img src="https://iiifod.npm.gov.tw/iiif/2/K2B%2FK2B000068N000000000PAO/full/,400/0/default.jpg"
+         alt="Opening section of Su Shi's autograph handscroll of the First Red Cliff Rhapsody"
+         loading="lazy"
+         onerror="this.style.display='none'"/>
+    <div class="ms-preview-text">
+      <h4>宋蘇軾書前赤壁賦卷</h4>
+      <p>
+        This handscroll — ink on paper, 23.9 × 258 cm — is the only surviving copy of
+        the First Red Cliff Rhapsody in Su Shi's own hand. In the Chinese calligraphic
+        tradition, a manuscript is not merely a text carrier: the brushwork itself is
+        understood as an expression of the writer's inner character
+        (<span style="font-family:var(--font-zh);color:#c8b890">書如其人</span>,
+        "the writing is the person").
+      </p>
+      <p>
+        <strong style="color:#c8a040;">Note:</strong> The first 36 characters of the scroll
+        were supplied by the Ming-dynasty calligrapher Wen Zhengming
+        (<span style="font-family:var(--font-zh);color:#c8b890">文徵明</span>, 1470–1559),
+        as the original opening was damaged.
+      </p>
+      <a class="ms-link" href="manuscript.html">
+        View the full manuscript <span>→</span>
+      </a>
+      <div class="ms-attr">
+        National Palace Museum, Taipei · CC BY 4.0 ·
+        <a href="https://www.npm.gov.tw" target="_blank" rel="noopener" style="color:var(--gold-hi)">www.npm.gov.tw</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SECTION 6 — EDITORIAL NOTE
+     ════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="sec-number">VI</div>
+  <div class="sec-head-zh">編輯說明</div>
+  <div class="sec-head-en">Editorial Notes</div>
+  <div class="sec-divider"></div>
+
+  <div class="callout">
+    <div class="callout-head">Genre translation: "Rhapsody," not "Ode"</div>
+    <p>
+      The genre <span style="font-family:var(--font-zh)">賦</span> (<em>fù</em>) is translated
+      here as "Rhapsody" rather than "Ode." While both terms appear in English scholarship,
+      "Rhapsody" more accurately conveys the genre's characteristics: its length, its mixture
+      of prose and verse, its declamatory quality, and its tradition of elaborate description
+      and philosophical inquiry. "Ode" (as in Pindar or Keats) carries lyric and celebratory
+      connotations that are misleading for the <em>fu</em>.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">The Guest: an open question</div>
+    <p>
+      The identity of "the Guest" (<span style="font-family:var(--font-zh)">客</span>) who
+      appears in both Rhapsodies remains an open scholarly question. Is the Guest a real
+      companion on the boat? Or a literary device — a projection of Su Shi's own doubts,
+      his inner voice of existential despair? The <em>fu</em> genre has a long tradition of
+      dialogues between a host and an imagined interlocutor. This edition does not resolve
+      the question; it encodes both readings as interpretive layers. See the
+      <a href="images.html" style="color:var(--gold);">Guest tab</a> on the Five Images page
+      for the full discussion.
+    </p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-head">English translations</div>
+    <p>
+      Two English translations are included: <strong>Burton Watson</strong>
+      (<em>Su Tung-p'o: Selections from a Sung Dynasty Poet</em>, Columbia, 1965) and
+      <strong>Stephen Owen</strong> (<em>An Anthology of Chinese Literature: Beginnings to 1911</em>,
+      Norton, 1996). No additional translations are included.
+    </p>
+    <p>
+      Watson and Owen represent fundamentally different translation philosophies. Watson, working
+      in the 1960s Columbia tradition of making classical Chinese accessible to English-language
+      readers, prioritises <strong>fluency and literary readability</strong>. His sentences are
+      smooth, his vocabulary vivid, and his rhythms natural in English — but this fluency sometimes
+      smooths over ambiguities in the original. Where the Chinese is compressed or syntactically
+      strange, Watson tends to expand and clarify, producing a text that reads beautifully but may
+      resolve tensions the original deliberately leaves open.
+    </p>
+    <p>
+      Owen, writing three decades later as a scholar of Chinese poetics, prioritises
+      <strong>structural fidelity</strong>. His translations preserve the parallelism, compression,
+      and syntactic strangeness of classical Chinese, even when this makes the English feel less
+      fluent. Where Watson interprets, Owen often leaves the reader to interpret — reproducing the
+      original's ambiguity rather than resolving it.
+    </p>
+    <p>
+      The decision to juxtapose both translations is not merely a matter of offering "two options."
+      It is an <strong>editorial argument</strong>: by placing Watson and Owen side by side beneath
+      the same Chinese passage, this edition makes visible the interpretive gap that every
+      translation must cross. When Watson renders <span style="font-family:var(--font-zh)">山高月小</span>
+      as "the mountains were tall and the moon <em>tiny</em>" and Owen as "the mountains were high
+      and the moon <em>small</em>," the reader sees two legitimate readings of the same four
+      characters — and begins to understand that translation is itself a form of scholarly
+      interpretation. The <a href="images.html" style="color:var(--gold);">Five Images</a> page
+      includes specific translation notes wherever Watson and Owen diverge meaningfully.
+    </p>
+  </div>
+</div>
+
+</div><!-- /.page -->
+
+</body>
+</html>

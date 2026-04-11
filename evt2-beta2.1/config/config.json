@@ -1,0 +1,231 @@
+{
+    "indexTitle": "前赤壁賦・後赤壁賦 — Red Cliff Rhapsodies DSE",
+    "webSite": "",
+    "logoUrl": "",
+    
+    "dataUrl": "data/text/redcliff.xml",
+    "sourcesUrl": "",
+    "analoguesUrl": "",
+    "sourcesTextsUrl": "",
+    "singleImagesUrl": "",
+    "enableXMLdownload": true,
+    
+    "visCollTextUrl": "",
+    "visCollStyleUrl": "",
+    "visCollSvg": "",
+    "visCollImageList": "",
+    "visCollDataModel": "",
+
+    "defaultViewMode": "readingTxt",
+    "availableViewModes": [
+        {
+            "label": "READING_TEXT",
+            "icon": "reading-txt",
+            "viewMode": "readingTxt",
+            "visible": true
+        },
+        {
+            "label": "MULTIPLE_RECENSIONS",
+            "icon": "mode-versions",
+            "viewMode": "versions",
+            "visible": false
+        },
+        {
+            "label": "IMAGE_TEXT",
+            "icon": "mode-imgTxt",
+            "viewMode": "imgTxt",
+            "visible": false
+        },
+        {
+            "label": "TEXT_TEXT",
+            "icon": "mode-txtTxt",
+            "viewMode": "txtTxt",
+            "visible": false
+        },
+        {
+            "label": "COLLATION",
+            "icon": "mode-collation",
+            "viewMode": "collation",
+            "visible": true
+        },
+        {
+            "label": "SOURCE_TEXT",
+            "icon": "mode-srcTxt",
+            "viewMode": "srcTxt",
+            "visible": false
+        },
+        {
+            "label"    : "3DHOP",
+            "icon"     : "mode-tdhop",
+            "viewMode" : "tdhop",
+            "visible"  : false
+        }
+    ],
+
+    "defaultEdition": "critical",
+    "showEditionLevelSelector": false,
+    "availableEditionLevel": [
+        {
+            "value": "critical",
+            "label": "Critical",
+            "title": "Critical edition",
+            "visible": true
+        },
+        {
+            "value": "diplomatic",
+            "label": "Diplomatic",
+            "title": "Diplomatic edition",
+            "visible": false
+        },
+        {
+            "value": "interpretative",
+            "label": "Interpretative",
+            "title": "Interpretative edition",
+            "visible": false
+        }
+    ],
+    
+    "showDocumentSelector": false,
+    "enableNavBar": true,
+    "initNavBarOpened": false,
+    "thumbnailsButton": false,
+    "viscollButton": false,
+
+    "toolPinAppEntries": true,
+    "toolImageTextLinking": false,
+
+    "namedEntitiesSelector": false,
+    "namedEntitiesToHandle": [
+        {
+            "tagName": "persName",
+            "label": "Persons",
+            "available": false
+        },
+        {
+            "tagName": "placeName",
+            "label": "Places",
+            "available": false
+        },
+        {
+            "tagName": "orgName",
+            "label": "Organizations",
+            "available": false
+        }
+    ],
+    "otherEntitiesToHandle": [],
+
+    "preferredWitness": "su-shi-original",
+    "skipWitnesses": "",
+    "maxWitsLoadTogether": 3,
+
+    "witnessesGroups": [
+        {
+            "groupName": "Translations",
+            "witnesses": [
+                "su-shi-original",
+                "wit-watson",
+                "wit-owen"
+            ]
+        }
+    ],
+
+    "showInlineCriticalApparatus": false,
+    "showInlineSources": false,
+    "showInlineAnalogues": false,
+    "showReadingExponent": true,
+
+    "toolHeatMap": false,
+
+    "versions": [],
+
+    "listDef": "<listWit>",
+    "versionDef": "<witness>",
+    "fragmentMilestone": "<witStart>, <witEnd>",
+    "lacunaMilestone": "<lacunaStart>, <lacunaEnd>",
+    "notSignificantVariant": "",
+    "quoteDef": "",
+    "analogueDef": "",
+
+    "possibleLemmaFilters": "",
+    "possibleVariantFilters": "",
+
+    "variantColorLight": "",
+    "variantColorDark": "",
+    "heatmapColor": "",
+    "variantColors": {},
+
+    "defaultBibliographicStyle": "Chicago",
+    "allowedBibliographicStyles": {
+        "Chicago": {
+            "label": "Chicago",
+            "enabled": true
+        },
+        "APA": {
+            "label": "APA",
+            "enabled": false
+        },
+        "MLA": {
+            "label": "MLA",
+            "enabled": false
+        }
+    },
+
+    "virtualKeyboardKeys": [],
+
+    "imageViewerOptions": {
+        "prefixUrl": "images/osd-images/",
+        "showRotationControl": false,
+        "showNavigator": false,
+        "visibilityRatio": 1,
+        "defaultZoomLevel": 0.7,
+        "panHorizontal": true,
+        "constrainDuringPan": true,
+        "minZoomLevel": 0.7,
+        "maxZoomLevel": 3.0,
+        "wrapVertical": false
+    },
+    "imageNormalizationCoefficient": 1265,
+
+    "languages": [
+        "en"
+    ],
+    "showObjectSelector": false,
+
+    "tdhopViewerOptions": {
+      "toolHome": false,
+      "toolZoomin": false,
+      "toolZoomout": false,
+      "toolLighting": false,
+      "toolLightControl": false,
+      "toolMeasure": false,
+      "toolPickPoint": false,
+      "toolPlaneSections": false,
+      "toolSolidColor": false,
+      "toolCamera": false,
+      "toolHotspot": false,
+      "toolFullScreen": false,
+      "toolSwitchModel": false,
+      "toolArrows": false,
+      "toolLightController": false,
+
+      "Model_1": {
+         "name": "",
+         "path": "",
+         "mesh": ""
+      },
+
+      "Model_2": {
+         "name": "",
+         "path": "",
+         "mesh": ""
+      },
+
+      "Hotspots": {
+         "type": "",
+         "path": "",
+         "model": "",
+         "hotspotsdata": [],
+         "nextID": ""
+      }
+   }
+}

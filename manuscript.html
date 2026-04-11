@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manuscript — 前後赤壁賦 DSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #1a1612;
+      --paper:     #f5f1e8;
+      --paper-2:   #ede8db;
+      --border:    #c8bfa0;
+      --gold:      #9a6e28;
+      --gold-hi:   #c08830;
+      --gold-pale: #f0e4c4;
+      --warn-bg:   #fdf8ee;
+      --warn-line: #c8a040;
+      --font-zh:   'Noto Serif TC', serif;
+      --font-en:   'Cormorant Garamond', Georgia, serif;
+      --font-ui:   'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font-en);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Navbar ── */
+    nav {
+      background: var(--ink);
+      padding: 0 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      height: 50px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-brand { font-family: var(--font-zh); font-size: .95rem; color: var(--gold-hi); white-space: nowrap; }
+    nav a { font-family: var(--font-ui); font-size: .8rem; color: #aaa; text-decoration: none; letter-spacing: .04em; transition: color .15s; }
+    nav a:hover { color: #fff; }
+    nav a.active { color: #fff; border-bottom: 2px solid var(--gold-hi); padding-bottom: 2px; }
+
+    /* ── Layout: sidebar + main ── */
+    .page {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      flex: 1;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: #fff;
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 2rem 3rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .sidebar-title {
+      font-family: var(--font-zh);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--gold);
+      line-height: 1.5;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--gold);
+    }
+    .sidebar-title .en {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      color: #aaa;
+      font-weight: 400;
+      margin-top: .3rem;
+      letter-spacing: .03em;
+    }
+    .sec-head {
+      font-family: var(--font-ui);
+      font-size: .67rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--gold);
+      margin-bottom: .55rem;
+    }
+    .facts { display: grid; grid-template-columns: auto 1fr; gap: .4rem .9rem; }
+    .facts dt { font-family: var(--font-ui); font-size: .67rem; text-transform: uppercase; letter-spacing: .09em; color: #aaa; padding-top: .1rem; white-space: nowrap; }
+    .facts dd { font-family: var(--font-en); font-size: .9rem; color: var(--ink); line-height: 1.5; }
+    .facts dd .zh { font-family: var(--font-zh); font-size: .85rem; }
+    .prose { font-size: .9rem; line-height: 1.75; color: #333; }
+    .prose + .prose { margin-top: .6rem; }
+    .notice {
+      background: var(--warn-bg);
+      border-left: 3px solid var(--warn-line);
+      border-radius: 0 4px 4px 0;
+      padding: .8rem .95rem;
+    }
+    .notice-head { font-family: var(--font-ui); font-size: .67rem; text-transform: uppercase; letter-spacing: .1em; color: var(--warn-line); margin-bottom: .4rem; }
+    .notice p { font-size: .86rem; line-height: 1.65; color: #555; }
+    .notice p + p { margin-top: .45rem; }
+    .notice strong { color: var(--ink); font-weight: 600; }
+    .attribution {
+      background: var(--paper-2);
+      border-radius: 4px;
+      padding: .75rem .95rem;
+      font-size: .79rem;
+      line-height: 1.65;
+      color: #666;
+    }
+    .attribution .zh-attr { font-family: var(--font-zh); font-size: .8rem; display: block; margin-bottom: .3rem; color: #444; }
+    .attribution a { color: var(--gold); text-decoration: none; }
+    .attribution a:hover { text-decoration: underline; }
+    .open-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      width: 100%;
+      padding: .7rem 1rem;
+      background: var(--gold);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .15s;
+      letter-spacing: .02em;
+    }
+    .open-btn:hover { background: var(--gold-hi); }
+    .open-btn .arrow { font-size: 1rem; }
+    .colophons { font-size: .84rem; line-height: 1.65; color: #555; font-style: italic; }
+
+    /* ── Main viewer area ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      background: #0e0d0b;
+      overflow: hidden;
+    }
+
+    /* Viewer toolbar */
+    .viewer-bar {
+      background: #1a1814;
+      border-bottom: 1px solid #2e2a22;
+      padding: .65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
+    }
+    .viewer-bar-title { font-family: var(--font-zh); font-size: .88rem; color: var(--gold-hi); }
+    .viewer-bar-sub { font-family: var(--font-ui); font-size: .7rem; color: #666; }
+    .scroll-hint {
+      margin-left: auto;
+      font-family: var(--font-ui);
+      font-size: .68rem;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    /* Wen Zhengming warning bar */
+    .wen-bar {
+      background: #201800;
+      border-bottom: 1px solid #4a3800;
+      padding: .45rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      flex-shrink: 0;
+    }
+    .wen-bar p { font-family: var(--font-ui); font-size: .73rem; color: #c8a040; line-height: 1.5; }
+    .wen-bar strong { color: #e0c060; }
+
+    /* Scroll container */
+    .scroll-container {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: hidden;
+      display: flex;
+      align-items: stretch;
+      cursor: grab;
+      scrollbar-color: #3a3020 #0e0d0b;
+      scrollbar-width: thin;
+      min-height: 500px;
+    }
+    .scroll-container:active { cursor: grabbing; }
+    .scroll-container::-webkit-scrollbar { height: 6px; }
+    .scroll-container::-webkit-scrollbar-track { background: #0e0d0b; }
+    .scroll-container::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 3px; }
+
+    /* Image strip */
+    .img-strip {
+      display: flex;
+      align-items: stretch;
+      gap: 3px;
+      padding: 16px 24px;
+      height: 100%;
+    }
+
+    /* Individual image tile */
+    .tile {
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tile img {
+      height: calc(100% - 28px);
+      width: auto;
+      max-height: 580px;
+      display: block;
+      object-fit: contain;
+      border: 1px solid #2e2820;
+      transition: border-color .2s;
+    }
+    .tile:hover img { border-color: #6a5030; }
+    .tile-num {
+      font-family: var(--font-ui);
+      font-size: .6rem;
+      color: #444;
+      margin-top: 6px;
+      letter-spacing: .05em;
+    }
+
+    /* Wen Zhengming badge on first tile */
+    .tile-wen-badge {
+      position: absolute;
+      top: 6px;
+      left: 4px;
+      background: rgba(180,120,0,.9);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: .58rem;
+      padding: .18rem .45rem;
+      border-radius: 2px;
+      letter-spacing: .04em;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Loading placeholder */
+    .tile-placeholder {
+      height: 560px;
+      width: 280px;
+      background: #1a1814;
+      border: 1px solid #2e2820;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-family: var(--font-ui);
+      font-size: .7rem;
+    }
+
+    /* Error tile */
+    .tile-error {
+      height: 560px;
+      width: 260px;
+      background: #150f08;
+      border: 1px dashed #3a2a10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      color: #444;
+      font-family: var(--font-ui);
+      font-size: .72rem;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Bottom caption */
+    .caption-bar {
+      background: #13110e;
+      border-top: 1px solid #2a2418;
+      padding: .55rem 1.5rem;
+      font-family: var(--font-ui);
+      font-size: .7rem;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .caption-bar a { color: var(--gold); text-decoration: none; }
+    .caption-bar a:hover { text-decoration: underline; }
+
+    @media (max-width: 860px) {
+      .page { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--border); max-height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">前後赤壁賦 DSE</span>
+  <a href="index.html">Home</a>
+  <a href="manuscript.html" class="active">Manuscript</a>
+  <a href="evt2-beta2.1/index.html">EVT</a>
+  <a href="texts.html">Texts</a>
+  <a href="images.html">Five Images</a>
+  <a href="bibliography.html">Bibliography</a>
+</nav>
+
+<div class="page">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+
+    <div>
+      <div class="sidebar-title">
+        宋蘇軾書前赤壁賦卷
+        <span class="en">Autograph Handscroll of the First Red Cliff Rhapsody</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sec-head">Object</div>
+      <dl class="facts">
+        <dt>Author</dt>   <dd><span class="zh">蘇軾</span> Su Shi (1037–1101)</dd>
+        <dt>Date</dt>     <dd>1082 CE · Song dynasty, Yuanfeng 5</dd>
+        <dt>Medium</dt>   <dd>Ink on paper, handscroll</dd>
+        <dt>Dimensions</dt><dd>23.9 × 258 cm</dd>
+        <dt>Script</dt>   <dd>Running-regular (<span class="zh">行楷</span>)</dd>
+        <dt>Location</dt> <dd>National Palace Museum, Taipei<br><span style="font-size:.78rem;color:#999">Acc. 故畫000882</span></dd>
+        <dt>Licence</dt>  <dd>CC BY 4.0 · <a href="https://www.npm.gov.tw" target="_blank" style="color:var(--gold)">npm.gov.tw</a></dd>
+      </dl>
+    </div>
+
+    <div>
+      <div class="sec-head">Significance</div>
+      <p class="prose">
+        This handscroll is the only surviving manuscript of the First Red Cliff Rhapsody
+        in Su Shi's own hand — one of the most celebrated examples of Song-dynasty
+        calligraphy, valued as both literary text and visual art.
+      </p>
+      <p class="prose">
+        In classical Chinese culture, calligraphy is understood as a direct expression
+        of the writer's inner character (<span style="font-family:var(--font-zh)">書如其人</span>,
+        "the writing is the person"). Access to this scroll gives the reader something
+        no printed edition can offer: the materiality of the text in the author's
+        own hand, composed in exile.
+      </p>
+    </div>
+
+    <div class="notice">
+      <div class="notice-head">⚠ Editorial Note — Characters 1–36</div>
+      <p>
+        The <strong>first 36 characters</strong> of this scroll are
+        <strong>not in Su Shi's hand.</strong> The opening section of the original
+        was damaged after Su Shi's death, and the missing text was supplied by the
+        Ming-dynasty calligrapher
+        <strong><span style="font-family:var(--font-zh)">文徵明</span>
+        Wen Zhengming (1470–1559)</strong>.
+      </p>
+      <p>
+        Wen Zhengming was himself a distinguished calligrapher, but his hand is
+        visibly different from Su Shi's. All scholarly editions flag this supplement.
+        The first tile in the viewer below is marked accordingly.
+      </p>
+    </div>
+
+    <div>
+      <div class="sec-head">The Second Rhapsody</div>
+      <p class="prose">
+        No autograph manuscript of the <em>Second</em> Red Cliff Rhapsody is known
+        to survive. The second rhapsody exists only in later transcriptions and
+        printed editions — a fact that makes this handscroll of the First Rhapsody
+        the sole surviving witness to Su Shi's brushwork on these texts.
+      </p>
+    </div>
+
+    <div>
+      <div class="sec-head">Colophons</div>
+      <p class="colophons">
+        The scroll bears colophons by the Ming calligrapher and critic
+        <span style="font-family:var(--font-zh)">董其昌</span>
+        Dong Qichang (1555–1636) and other later hands. These are part of the
+        scroll's collection history and are not Su Shi's composition.
+      </p>
+    </div>
+
+    <a class="open-btn"
+       href="https://digitalarchive.npm.gov.tw/Integrate/IIIFViewer?id=882&dep=P&imageName="
+       target="_blank" rel="noopener">
+      <span>Open full IIIF viewer at NPM</span>
+      <span class="arrow">↗</span>
+    </a>
+
+    <div class="attribution">
+      <span class="zh-attr">宋蘇軾書前赤壁賦　卷。國立故宮博物院，台北。</span>
+      <em>Former Ode on the Red Cliff.</em>
+      National Palace Museum, Taipei.
+      CC BY 4.0 ·
+      <a href="https://www.npm.gov.tw" target="_blank">www.npm.gov.tw</a>
+    </div>
+
+  </aside>
+
+  <!-- ── Main viewer ── -->
+  <div class="main">
+
+    <div class="viewer-bar">
+      <span class="viewer-bar-title">宋蘇軾書前赤壁賦卷</span>
+      <span class="viewer-bar-sub">National Palace Museum · IIIF images · CC BY 4.0</span>
+      <span class="scroll-hint">← scroll to navigate the handscroll →</span>
+    </div>
+
+    <div class="wen-bar">
+      <p>
+        <strong>Note:</strong> Characters 1–36 (first tile) are in the hand of
+        <strong>Wen Zhengming</strong> (文徵明, Ming dynasty), not Su Shi.
+        Su Shi's autograph begins at character 37.
+      </p>
+    </div>
+
+    <div class="scroll-container" id="scroll-container">
+      <div class="img-strip" id="img-strip">
+        <!-- Tiles inserted by JS -->
+      </div>
+    </div>
+
+    <div class="caption-bar">
+      <span>Images served via IIIF from
+        <a href="https://iiifod.npm.gov.tw" target="_blank" rel="noopener">iiifod.npm.gov.tw</a>
+        · CC BY 4.0 · National Palace Museum, Taipei
+      </span>
+      <a href="https://digitalarchive.npm.gov.tw/Collection/Detail?id=882&dep=P"
+         target="_blank" rel="noopener">View collection record ↗</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Image data ──────────────────────────────────────────────
+// 15 tiles from the IIIF manifest, left-to-right (PAO = scroll opening)
+// Resolution: ,800 = 800px height via IIIF Image API
+const BASE = 'https://iiifod.npm.gov.tw/iiif/2/K2B%2F';
+const SUFFIX = '/full/,800/0/default.jpg';
+const IDS = [
+  'K2B000068N000000000PAO',
+  'K2B000068N000000000PAN',
+  'K2B000068N000000000PAM',
+  'K2B000068N000000000PAL',
+  'K2B000068N000000000PAK',
+  'K2B000068N000000000PAJ',
+  'K2B000068N000000000PAI',
+  'K2B000068N000000000PAH',
+  'K2B000068N000000000PAG',
+  'K2B000068N000000000PAF',
+  'K2B000068N000000000PAE',
+  'K2B000068N000000000PAD',
+  'K2B000068N000000000PAC',
+  'K2B000068N000000000PAB',
+  'K2B000068N000000000PAA',
+];
+
+// ── Build tiles ──────────────────────────────────────────────
+const strip = document.getElementById('img-strip');
+
+IDS.forEach((id, i) => {
+  const tile = document.createElement('div');
+  tile.className = 'tile';
+
+  const img = document.createElement('img');
+  img.src = BASE + id + SUFFIX;
+  img.alt = `Handscroll section ${i + 1} of ${IDS.length}`;
+  img.loading = 'lazy';
+
+  img.onerror = () => {
+    img.style.display = 'none';
+    const err = document.createElement('div');
+    err.className = 'tile-error';
+    err.innerHTML = `<span style="font-size:1.5rem;opacity:.3">🖼</span>
+                     <span>Section ${i + 1}<br>could not load</span>`;
+    tile.insertBefore(err, tile.firstChild);
+  };
+
+  tile.appendChild(img);
+
+  // Section number label
+  const num = document.createElement('div');
+  num.className = 'tile-num';
+  num.textContent = `${i + 1} / ${IDS.length}`;
+  tile.appendChild(num);
+
+  // Wen Zhengming badge on first tile only
+  if (i === 0) {
+    const badge = document.createElement('div');
+    badge.className = 'tile-wen-badge';
+    badge.textContent = 'Wen Zhengming supplement (chars 1–36)';
+    tile.appendChild(badge);
+  }
+
+  strip.appendChild(tile);
+});
+
+// ── Mouse-drag scrolling ─────────────────────────────────────
+const container = document.getElementById('scroll-container');
+let isDragging = false;
+let startX, scrollLeft;
+
+container.addEventListener('mousedown', e => {
+  isDragging = true;
+  startX    = e.pageX - container.offsetLeft;
+  scrollLeft = container.scrollLeft;
+  container.style.userSelect = 'none';
+});
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+  container.style.userSelect = '';
+});
+container.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const x    = e.pageX - container.offsetLeft;
+  const walk = (x - startX) * 1.4;
+  container.scrollLeft = scrollLeft - walk;
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "projectInfo": {
+    "title": "前後赤壁賦 — Digital Scholarly Edition",
+    "subtitleEn": "Su Shi's Red Cliff Rhapsodies (1082): A Digital Scholarly Edition",
+    "logoUrl": "",
+    "logoAlt": "Red Cliff DSE"
+  },
+
+  "mainTeiDocument": "../xml/redcliff.xml",
+
+  "editionUrls": [
+    "../xml/redcliff.xml"
+  ],
+
+  "defaultEdition": "../xml/redcliff.xml",
+
+  "defaultViewMode": "readingText",
+
+  "availableViewModes": [
+    "readingText",
+    "imageTextLink",
+    "collation"
+  ],
+
+  "enableCollation": true,
+
+  "parallelSegments": true,
+
+  "witnesses": [
+    {
+      "id": "first-rhapsody",
+      "label": "前赤壁賦 — First Rhapsody"
+    },
+    {
+      "id": "second-rhapsody",
+      "label": "後赤壁賦 — Second Rhapsody"
+    }
+  ],
+
+  "namedEntitiesLabel": {
+    "person": "Persons",
+    "place": "Places",
+    "org": "Organisations"
+  },
+
+  "annotation": {
+    "enabled": true,
+    "types": [
+      {
+        "type": "image",
+        "label": "Core Image",
+        "color": "#c9a84c"
+      }
+    ]
+  },
+
+  "languages": [
+    { "label": "繁體中文 (Original)", "value": "zh-Hant" },
+    { "label": "English (Watson)", "value": "en-watson" },
+    { "label": "English (Owen)", "value": "en-owen" }
+  ],
+
+  "defaultLanguage": "zh-Hant",
+
+  "notesDisplayPosition": "popup",
+
+  "imageViewer": {
+    "type": "iiif",
+    "manifestUrl": "https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid=882&dept=P"
+  },
+
+  "ui": {
+    "showPageHeaderInfo": true,
+    "showEditionTitleInHeader": true,
+    "showNavBar": true
+  },
+
+  "_notes": {
+    "parallel-mode": "EVT3 parallel view is configured via the two <div type='rhapsody'> elements in redcliff.xml. If EVT3 parallel mode is not fully supported, use texts.html (standalone synoptic view) as the display layer for the two-column reading interface.",
+    "annotation-display": "The <seg type='image' ana='#img-* #reg-*'> elements in redcliff.xml carry the five-image annotations. EVT will render these as highlighted spans; clicking opens the inline <note type='editorial'> content as a popup.",
+    "translation-toggle": "Watson and Owen translations are encoded as <note type='translation' resp='#watson|#owen'> elements. If EVT layer support is insufficient for toggling, the standalone texts.html page implements JS show/hide for translation layers."
+  }
+}

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Texts — 前後赤壁賦 DSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:     #1c1812;
+      --paper:   #f7f4ed;
+      --border:  #d6c9a4;
+      --gold:    #a0722a;
+      --gold-hi: #c8941e;
+      --el-line: #3d8b55; --el-bg: #e8f5ed;
+      --me-line: #4a5faa; --me-bg: #eaedfa;
+      --am-line: #b08020; --am-bg: #faf2d8;
+      --ee-line: #944070; --ee-bg: #fae8f2;
+      --watson:  #1f6b6b;
+      --owen:    #7a3818;
+      --font-zh: 'Noto Serif TC', serif;
+      --font-en: 'EB Garamond', Georgia, serif;
+      --font-ui: 'DM Sans', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--font-en); min-height: 100vh; }
+
+    /* Navbar */
+    nav { background: var(--ink); padding: 0 2.5rem; display: flex; align-items: center; gap: 2rem; height: 50px; position: sticky; top: 0; z-index: 200; }
+    .nav-brand { font-family: var(--font-zh); font-size: .95rem; color: var(--gold-hi); white-space: nowrap; }
+    nav a { font-family: var(--font-ui); font-size: .8rem; color: #aaa; text-decoration: none; letter-spacing: .04em; transition: color .15s; }
+    nav a:hover { color: #fff; }
+    nav a.active { color: #fff; border-bottom: 2px solid var(--gold-hi); padding-bottom: 2px; }
+
+    /* Toolbar */
+    .toolbar { background: #fff; border-bottom: 1px solid var(--border); padding: .6rem 2.5rem; display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; position: sticky; top: 50px; z-index: 190; }
+    .tlabel { font-family: var(--font-ui); font-size: .72rem; color: #999; text-transform: uppercase; letter-spacing: .1em; }
+    .tbtn { font-family: var(--font-ui); font-size: .78rem; padding: .28rem .8rem; border: 1px solid var(--border); border-radius: 3px; background: transparent; cursor: pointer; color: #666; transition: all .15s; }
+    .tbtn:hover { border-color: var(--gold); color: var(--gold); }
+    .tbtn.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+    .legend { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+    .leg { font-family: var(--font-ui); font-size: .72rem; color: #888; display: flex; align-items: center; gap: .3rem; }
+    .leg-dot { width: 10px; height: 4px; border-radius: 2px; }
+
+    /* Grid */
+    .synoptic { display: grid; grid-template-columns: 1fr 1fr; min-height: calc(100vh - 100px); }
+    .col { padding: 2.5rem 2.5rem 4rem; border-right: 1px solid var(--border); }
+    .col:last-child { border-right: none; }
+    .col-head { margin-bottom: 2rem; padding-bottom: 1.2rem; border-bottom: 2px solid var(--gold); }
+    .col-head h2 { font-family: var(--font-zh); font-size: 1.4rem; font-weight: 400; color: var(--gold); }
+    .col-head .en { font-family: var(--font-ui); font-size: .78rem; color: #999; margin-top: .25rem; }
+    .col-head .dateline { font-family: var(--font-en); font-size: .8rem; color: #bbb; margin-top: .4rem; font-style: italic; }
+
+    /* Paragraphs */
+    .pb { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed #e0d8c0; }
+    .pb:last-child { border-bottom: none; }
+    .pid { font-family: var(--font-ui); font-size: .65rem; color: #ccc; letter-spacing: .08em; margin-bottom: .5rem; text-transform: uppercase; }
+    .zh { font-family: var(--font-zh); font-size: 1.05rem; line-height: 2.3; color: var(--ink); }
+
+    /* Chinese annotation spans */
+    .ann { cursor: pointer; border-bottom: 2px solid transparent; border-radius: 1px; transition: background .12s; }
+    .ann.reg-harmony    { border-color: var(--el-line); }
+    .ann.reg-estrangement { border-color: var(--me-line); }
+    .ann.reg-tension { border-color: var(--am-line); }
+    .ann.reg-uncanny      { border-color: var(--ee-line); }
+    .ann.active-ann.reg-harmony    { background: var(--el-bg); }
+    .ann.active-ann.reg-estrangement { background: var(--me-bg); }
+    .ann.active-ann.reg-tension { background: var(--am-bg); }
+    .ann.active-ann.reg-uncanny      { background: var(--ee-bg); }
+
+    /* Translation blocks */
+    .trans { display: none; margin-top: .9rem; padding: .75rem 1rem; border-radius: 3px; font-family: var(--font-en); font-size: .88rem; line-height: 1.8; color: #4a4035; }
+    .trans.show { display: block; }
+    .trans.watson { background: #f0f8f8; border-left: 3px solid var(--watson); }
+    .trans.owen   { background: #fdf6f0; border-left: 3px solid var(--owen); }
+    .trans-label { font-family: var(--font-ui); font-size: .65rem; text-transform: uppercase; letter-spacing: .12em; margin-bottom: .4rem; }
+    .trans.watson .trans-label { color: var(--watson); }
+    .trans.owen   .trans-label { color: var(--owen); }
+
+    /* Translation highlights */
+    .tann { border-radius: 2px; transition: background .15s; }
+    .tann.tann-active.reg-harmony    { background: var(--el-bg); outline: 1px solid var(--el-line); }
+    .tann.tann-active.reg-estrangement { background: var(--me-bg); outline: 1px solid var(--me-line); }
+    .tann.tann-active.reg-tension { background: var(--am-bg); outline: 1px solid var(--am-line); }
+    .tann.tann-active.reg-uncanny      { background: var(--ee-bg); outline: 1px solid var(--ee-line); }
+
+    /* Popup */
+    #popup { display: none; position: fixed; z-index: 300; width: 340px; background: #fff; border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 8px 32px rgba(0,0,0,.14); padding: 1.1rem 1.2rem 1rem; font-family: var(--font-en); }
+    #popup.open { display: block; }
+    .pop-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: .7rem; }
+    .pop-char { font-family: var(--font-zh); font-size: 1.6rem; color: var(--gold-hi); line-height: 1; margin-right: .8rem; }
+    .pop-meta { flex: 1; }
+    .pop-image-name { font-family: var(--font-ui); font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: #999; }
+    .pop-tag { display: inline-block; font-family: var(--font-ui); font-size: .7rem; font-weight: 500; padding: .18rem .55rem; border-radius: 10px; margin-top: .3rem; }
+    .pop-tag.reg-harmony    { background: var(--el-bg); color: var(--el-line); }
+    .pop-tag.reg-estrangement { background: var(--me-bg); color: var(--me-line); }
+    .pop-tag.reg-tension { background: var(--am-bg); color: var(--am-line); }
+    .pop-tag.reg-uncanny      { background: var(--ee-bg); color: var(--ee-line); }
+    .pop-close { background: none; border: none; cursor: pointer; color: #bbb; font-size: 1.1rem; line-height: 1; padding: 0; flex-shrink: 0; }
+    .pop-close:hover { color: #555; }
+    .pop-note { font-size: .83rem; line-height: 1.65; color: #444; border-top: 1px solid #f0ebe0; padding-top: .7rem; }
+    .pop-link { display: inline-block; margin-top: .6rem; font-family: var(--font-ui); font-size: .72rem; color: var(--watson); text-decoration: none; }
+    .pop-link:hover { text-decoration: underline; }
+
+    /* Rationale banner */
+    .rationale {
+      max-width: 960px;
+      margin: 2rem auto 0;
+      padding: 1.8rem 2.5rem 1.6rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    .rationale h3 {
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .9rem;
+    }
+    .rationale p {
+      font-family: var(--font-en);
+      font-size: .88rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: .7rem;
+    }
+    .rationale p:last-child { margin-bottom: 0; }
+    .rationale strong { color: var(--ink); font-weight: 500; }
+    .rationale code {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: .8rem;
+      background: #f5f0e6;
+      padding: .1rem .35rem;
+      border-radius: 3px;
+      color: var(--gold);
+    }
+    .rationale .evt-limits {
+      margin-top: .8rem;
+      padding: .9rem 1.1rem;
+      background: #faf7f0;
+      border-left: 3px solid var(--border);
+      border-radius: 0 4px 4px 0;
+    }
+    .rationale .evt-limits p {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #777;
+      margin-bottom: .4rem;
+    }
+    .rationale-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: .2rem;
+      flex-shrink: 0;
+      transition: color .15s;
+    }
+    .rationale-close:hover { color: #888; }
+
+    @media (max-width: 860px) {
+      .synoptic { grid-template-columns: 1fr; }
+      .col { border-right: none; border-bottom: 2px solid var(--border); }
+      .legend { display: none; }
+      .rationale { margin: 1rem; padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">前後赤壁賦 DSE</span>
+  <a href="index.html">Home</a>
+  <a href="manuscript.html">Manuscript</a>
+  <a href="evt2-beta2.1/index.html">EVT</a>
+  <a href="texts.html" class="active">Texts</a>
+  <a href="images.html">Five Images</a>
+  <a href="bibliography.html">Bibliography</a>
+</nav>
+
+<div class="toolbar">
+  <span class="tlabel">Translations</span>
+  <button class="tbtn active" id="btn-original" onclick="setTrans('original')">Original only</button>
+  <button class="tbtn" id="btn-watson"   onclick="setTrans('watson')">+ Watson</button>
+  <button class="tbtn" id="btn-owen"     onclick="setTrans('owen')">+ Owen</button>
+  <button class="tbtn" id="btn-both"     onclick="setTrans('both')">Watson vs Owen</button>
+  <div class="legend">
+    <span class="leg"><span class="leg-dot" style="background:var(--el-line)"></span>Harmony</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--me-line)"></span>Estrangement</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--am-line)"></span>Tension</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--ee-line)"></span>Uncanny</span>
+  </div>
+</div>
+
+<!-- Singleton popup -->
+<div id="popup">
+  <div class="pop-top">
+    <div style="display:flex;align-items:flex-start">
+      <div class="pop-char" id="pop-char"></div>
+      <div class="pop-meta">
+        <div class="pop-image-name" id="pop-image"></div>
+        <span class="pop-tag" id="pop-tag"></span>
+      </div>
+    </div>
+    <button class="pop-close" onclick="closePopup()">✕</button>
+  </div>
+  <div class="pop-note" id="pop-note"></div>
+  <a class="pop-link" id="pop-link" href="#">→ See full image analysis</a>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- RATIONALE: Why this page exists    -->
+<!-- ═══════════════════════════════════ -->
+<div class="rationale" id="rationale-banner">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+    <h3>Why this page exists — beyond EVT</h3>
+    <button class="rationale-close" onclick="document.getElementById('rationale-banner').style.display='none'" title="Dismiss">✕</button>
+  </div>
+  <p>
+    The full TEI/XML encoding of both Rhapsodies (<code>redcliff.xml</code>) contains
+    <strong>26 semantic annotations</strong> marking the five core images (月 水 風 赤壁 客),
+    each tagged with an <strong>emotional register</strong> (Harmony, Estrangement, Tension, Uncanny),
+    <strong>52 editorial and source notes</strong> written for readers unfamiliar with classical Chinese literature,
+    and <strong>9 translation apparatus entries</strong> comparing Watson's and Owen's renderings of key passages.
+    This encoding is fully TEI P5 compliant.
+  </p>
+  <p>
+    <strong>EVT 2</strong> (Edition Visualization Technology), the standard platform for rendering TEI-encoded
+    digital scholarly editions, was used to validate this encoding. EVT successfully loads the XML file
+    and renders the critical text with the translation apparatus — confirming that the encoding is
+    standards-compliant and machine-readable.
+  </p>
+  <div class="evt-limits">
+    <p>However, EVT 2's critical edition parser has structural limitations that prevent it from
+    fully visualising this edition's scholarly argument:</p>
+    <p>
+      <strong>No synoptic view</strong> — EVT cannot display two <code>&lt;div type="rhapsody"&gt;</code>
+      elements side by side. The emotional contrast between the two Rhapsodies, which is the core of this
+      edition's research question, requires parallel reading.
+    </p>
+    <p>
+      <strong>No semantic highlighting</strong> — EVT does not interpret <code>@ana</code> attributes
+      on <code>&lt;seg&gt;</code> elements. The five recurring images cannot be colour-coded by emotional register,
+      making the transformation pattern invisible.
+    </p>
+    <p>
+      <strong>No editorial note rendering</strong> — <code>&lt;note type="editorial"&gt;</code> elements
+      inside <code>&lt;lem&gt;</code> cause parsing errors; placed outside, they are silently ignored.
+      The cultural context essential for non-specialist readers cannot be displayed.
+    </p>
+    <p>
+      <strong>No image-based filtering</strong> — There is no mechanism to isolate and compare
+      occurrences of a single image (e.g. all instances of 月) across both texts.
+    </p>
+  </div>
+  <p style="margin-top: .9rem;">
+    This page addresses each of these limitations: a <strong>synoptic two-column layout</strong> with
+    <strong>colour-coded image annotations</strong>, <strong>clickable editorial notes</strong>,
+    and a <strong>translation toggle</strong> comparing Watson and Owen paragraph by paragraph.
+    For image-based filtering and the full comparative analysis, see the
+    <a href="images.html" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold);">Five Images</a> page.
+  </p>
+</div>
+
+<div class="synoptic">
+
+<!-- ═══════════════════════════════════ -->
+<!-- LEFT — First Rhapsody              -->
+<!-- ═══════════════════════════════════ -->
+<div class="col">
+  <div class="col-head">
+    <h2>前赤壁賦</h2>
+    <div class="en">First Red Cliff Rhapsody</div>
+    <div class="dateline">7th month, Yuanfeng 5 (≈ August 1082) · Transcendence, philosophical acceptance</div>
+  </div>
+
+  <!-- R1P1 -->
+  <div class="pb">
+    <div class="pid">R1 · P1</div>
+    <div class="zh">壬戌之秋，七月既望，蘇子與客泛舟，游於<span class="ann reg-tension" data-id="R1-redcliff-1" data-char="赤壁" data-image="Red Cliff (赤壁)" data-reg="reg-tension" data-note="Red Cliff (赤壁, Chìbì): a cliff face along the Yangzi River near Huangzhou. The name is associated with the Battle of Red Cliffs (208 CE), in which the warlord Cao Cao was defeated by the allied forces of Liu Bei and Sun Quan — one of the most celebrated military engagements in Chinese history. Scholars believe Su Shi was likely visiting a different site than the actual battlefield, but the historical resonance was deliberately invoked. In this first appearance, Red Cliff functions as an emotionally tense backdrop: it evokes the transience of heroic achievement, but Su Shi will transcend that grief philosophically. Emotional register: Tension." data-target="img-redcliff">赤壁</span>之下。<span class="ann reg-harmony" data-id="R1-wind-1" data-char="清風／水波" data-image="Wind (風) + Water (水)" data-reg="reg-harmony" data-note="'A light breeze came gently; the water's surface was unruffled.' Wind and water appear together as the opening condition of the journey — both at their most serene. Wind (風) frequently carries a spiritual dimension in classical Chinese writing, the medium through which the spirit moves freely. Water (水) is an undisturbed mirror. Both images set the tone of ease and transcendence that defines the First Rhapsody. Emotional register: Harmony." data-target="img-wind">清風徐來，水波不興。</span>舉酒屬客，誦明月之詩，歌窈窕之章。少焉，<span class="ann reg-harmony" data-id="R1-moon-1" data-char="月" data-image="Moon (月)" data-reg="reg-harmony" data-note="'The moon rose above the Eastern Mountain, lingering between the constellations Dou and Niu.' The moon rises slowly, 'lingering' (徘徊, páihuái) — a verb that in Chinese also describes a person pacing unhurriedly. The moon is personified: it moves at human pace, keeps company, seems intimate and benevolent. Emotional register: Harmony — the moon as serene, cosmic companion." data-target="img-moon">月出於東山之上，徘徊於斗牛之間。</span>白露橫江，<span class="ann reg-harmony" data-id="R1-water-1" data-char="水光" data-image="Water (水/江)" data-reg="reg-harmony" data-note="'The river's gleam merged with the sky.' The water is still, luminous, and boundless — it dissolves the boundary between earth and heaven. In the First Rhapsody, the river consistently functions as a mirror of transcendence. Emotional register: Harmony." data-target="img-water">水光接天。</span>縱一葦之所如，凌萬頃之茫然。<span class="ann reg-harmony" data-id="R1-wind-2" data-char="御風" data-image="Wind (風)" data-reg="reg-harmony" data-note="'So boundless — as if riding the void on the wind, not knowing where we would stop.' 馮虛御風 (riding the void on the wind) is the Daoist ideal of frictionless spiritual freedom: wind becomes the vehicle of transcendence itself. This is the First Rhapsody's climactic wind image, the apex of its arc of harmony. Compare with the Second Rhapsody, where wind appears only as a reactive force. Emotional register: Harmony." data-target="img-wind">浩浩乎如馮虛御風，而不知其所止；</span>飄飄乎如遺世獨立，羽化而登仙。</div>
+    <div class="trans watson" id="w-R1P1"><div class="trans-label">Watson · 1965</div>It was the autumn of the jen-hsü year, the sixteenth night of the seventh month. Master Su and his guests were boating beneath <span class="tann reg-tension" data-id="R1-redcliff-1">Red Cliff</span>. <span class="tann reg-harmony" data-id="R1-wind-1">A cool breeze blew gently; the water was calm and unruffled.</span> Su raised his cup and offered wine to his guests, reciting the poem of the bright moon and singing the song of the graceful lady. Presently <span class="tann reg-harmony" data-id="R1-moon-1">the moon rose above the eastern hills and lingered between the Dipper and the Ox.</span> White dew lay across the river, and <span class="tann reg-harmony" data-id="R1-water-1">the glimmering water merged with the sky.</span> We let the little boat go where it would, drifting over the measureless expanse of water. How boundless it was, <span class="tann reg-harmony" data-id="R1-wind-2">as if we were riding the void with the wind as our steed, not knowing where we would stop;</span> how airy and light, as if we had left the world behind, risen above it all, grown wings and become immortals!</div>
+    <div class="trans owen" id="o-R1P1"><div class="trans-label">Owen · 1996</div>It was autumn of the year jen-hsü, the night after the full moon of the seventh month. Su Tzu and his guests went boating beneath <span class="tann reg-tension" data-id="R1-redcliff-1">the Red Cliff</span>. <span class="tann reg-harmony" data-id="R1-wind-1">A cool breeze arose gently; the surface of the water was still.</span> He raised his wine-cup and drank a toast to his guests, reciting the "Poem on the Bright Moon" and singing the stanza on the graceful woman. A little while later, <span class="tann reg-harmony" data-id="R1-moon-1">the moon rose above the Eastern Mountain and lingered between the Dipper and the Ox.</span> White mist lay across the river, and <span class="tann reg-harmony" data-id="R1-water-1">the shining water joined the sky.</span> We drifted along in our small boat wherever we pleased, floating over the boundless expanse. How vast it was — <span class="tann reg-harmony" data-id="R1-wind-2">as if riding the empty air with the wind, not knowing where to stop;</span> how free — as if leaving the world behind, standing alone, becoming an immortal with wings ascending to heaven.</div>
+  </div>
+
+  <!-- R1P2 -->
+  <div class="pb">
+    <div class="pid">R1 · P2</div>
+    <div class="zh">於是飲酒樂甚，扣舷而歌之。歌曰：「桂棹兮蘭槳，擊空明兮溯流光。渺渺兮余懷，望美人兮天一方。」<span class="ann reg-tension" data-id="R1-guest-1" data-char="客" data-image="The Guest (客)" data-reg="reg-tension" data-note="'Among the guests, there was one who played the transverse flute (洞簫).' This is the Guest's first appearance. The Guest is a companion on the boat — but who, exactly, this person is remains uncertain. Some scholars read the Guest as a real historical companion; others argue that the Guest is a literary projection of Su Shi's own inner voice of existential doubt, since Su Shi argues against the Guest's grief so effectively that the Guest simply dissolves at dialogue's end. The DSE encodes both readings. Emotional register: Tension." data-target="img-guest">客有吹洞簫者，</span>倚歌而和之。其聲嗚嗚然：如怨如慕，如泣如訴；餘音嫋嫋，不絕如縷，舞幽壑之潛蛟，泣孤舟之嫠婦。</div>
+    <div class="trans watson" id="w-R1P2"><div class="trans-label">Watson · 1965</div>So we drank merrily, and when we were well along with the wine, I tapped on the side of the boat and began to sing. The song went: "Cassia wood oar and orchid sweep, / Strike the moon's bright heart, row upstream on its shining! / Far and away my longings reach — / A beautiful one in a corner of sky." <span class="tann reg-tension" data-id="R1-guest-1">One of the guests, who played the flute,</span> accompanied my song. The music wailed and sobbed, as though lamenting, as though reproaching; the lingering notes spun out like a slender thread that would not break, and moved the hidden dragons in their sunken lairs to dance, and the widow in her solitary boat to weep.</div>
+    <div class="trans owen" id="o-R1P2"><div class="trans-label">Owen · 1996</div>Then we were drinking merrily, and beating on the gunwale, we sang. The song went: "Cassia oars, magnolia sweeps, / strike the moon's reflection, row against the flowing light. / So far away are my longings, / gazing to one who is lovely in a corner of the sky." <span class="tann reg-tension" data-id="R1-guest-1">Among the guests was one who played the flute.</span> He accompanied the singing. The music sobbed and wailed, with grief and longing; the lingering notes were tenuous as a thread and did not cease; they set the hidden dragons in the dark deep dancing and drew tears from a solitary widow in her boat.</div>
+  </div>
+
+  <!-- R1P3 -->
+  <div class="pb">
+    <div class="pid">R1 · P3</div>
+    <div class="zh">蘇子愀然，正襟危坐，而問客曰：「何為其然也？」<span class="ann reg-tension" data-id="R1-guest-2" data-char="客" data-image="The Guest (客)" data-reg="reg-tension" data-note="The Guest's speech: quoting Cao Cao's poem, the Guest meditates on the transience of heroic glory at this very site — the Battle of Red Cliffs (208 CE) — then extends the lament to the brevity of human life: 'we are but mayflies in heaven and earth, a grain of millet in the vast ocean.' Within this speech are nested occurrences of moon, water, and wind. Emotional register: Tension — grief that will be consoled." data-target="img-guest">客曰：「<span class="ann reg-estrangement" data-id="R1-moon-guest-1" data-char="月明星稀" data-image="Moon (月)" data-reg="reg-estrangement" data-note="'The moon is bright, the stars are few.' The Guest opens his speech by quoting these lines from a poem by Cao Cao (曹操, 155–220 CE), the great warlord defeated at the Battle of Red Cliffs. The moon here is not the serene companion of the opening scene — it is the moon of an elegy, shining over a military defeat centuries old. Emotional register: Estrangement." data-target="img-moon">月明星稀，烏鵲南飛，</span>此非曹孟德之詩乎？西望夏口，東望武昌，山川相繆，鬱乎蒼蒼；此非孟德之困於周郎者乎？方其破荊州，下江陵，順流而東也，舳艫千里，旌旗蔽空，釃酒臨江，橫槊賦詩，固一世之雄也，而今安在哉？況吾與子，漁樵於江渚之上，侶魚蝦而友麋鹿，駕一葉之扁舟，舉匏尊以相屬。寄蜉蝣於天地，渺滄海之一粟。哀吾生之須臾，<span class="ann reg-estrangement" data-id="R1-water-guest-1" data-char="長江" data-image="Water (水/江)" data-reg="reg-estrangement" data-note="'I envy the endless flow of the Yangzi.' The Guest invokes the river's eternal flow as a measure of human insignificance. Water here is not the mirror of philosophical consolation (as in Su Shi's reply) but the emblem of everything that outlasts us. Emotional register: Estrangement — water as the scale of human smallness." data-target="img-water">羨長江之無窮。</span>挾飛仙以遨遊，<span class="ann reg-estrangement" data-id="R1-moon-guest-2" data-char="明月" data-image="Moon (月)" data-reg="reg-estrangement" data-note="'I would embrace the bright moon and never end.' The Guest's moon is an impossible ideal — immortality figured as an eternal embrace of the moon. This directly contrasts with Su Shi's reply in R1P4, where the moon is reframed not as an unreachable ideal but as a freely available constant. Same moon; opposite readings. Emotional register: Estrangement." data-target="img-moon">抱明月而長終。</span>知不可乎驟得，<span class="ann reg-estrangement" data-id="R1-wind-guest-1" data-char="悲風" data-image="Wind (風)" data-reg="reg-estrangement" data-note="'I pour these lingering notes into the mournful wind.' Wind receives the Guest's grief at the end of his speech. Compare with the opening of R1P1 (清風徐來, a light breeze came gently) and the conclusion of R1P4 (江上之清風, the pure wind on the river). The same wind has been transformed by the Guest's existential sorrow from a vehicle of transcendence into a vessel for lamentation. Emotional register: Estrangement." data-target="img-wind">托遺響於悲風。」</span></span></div>
+    <div class="trans watson" id="w-R1P3"><div class="trans-label">Watson · 1965</div>Su grew grave, straightened his robe, and sat up properly. "Why does the music sound so sad?" he asked. <span class="tann reg-tension" data-id="R1-guest-2">The guest replied:</span> "<span class="tann reg-estrangement" data-id="R1-moon-guest-1">'The moon is bright, the stars are few; crows and magpies fly south'</span> — is this not a poem of Ts'ao Ts'ao? Looking west to Hsiak'ou, east to Wuch'ang — how the mountains and rivers wind around! When he had broken Ching-chou and sailed east with the current — a thousand ships in a line, banners blocking out the sky — he was indeed a hero of his time. And where is he now? And what of you and I, fishermen and woodcutters on the river's sandy shores, companions of the fish and shrimps and friends of the deer, sailing this single-leaf of a boat? We are but mayflies in heaven and earth, a single grain in the vast ocean. I grieve for the shortness of our lives and <span class="tann reg-estrangement" data-id="R1-water-guest-1">envy the endlessness of the great river.</span> I would like to take the hand of the winged immortal and wander as he wanders, <span class="tann reg-estrangement" data-id="R1-moon-guest-2">to embrace the bright moon and last forever.</span> I know this cannot come suddenly. So <span class="tann reg-estrangement" data-id="R1-wind-guest-1">I pour these lingering notes into the sad wind.</span>"</div>
+    <div class="trans owen" id="o-R1P3"><div class="trans-label">Owen · 1996</div>Su Tzu turned somber, adjusted his clothes and sat up straight, then asked the guest: "Why is the music like this?" <span class="tann reg-tension" data-id="R1-guest-2">The guest said:</span> "<span class="tann reg-estrangement" data-id="R1-moon-guest-1">'Bright is the moon, sparse are the stars, crows and magpies fly south'</span> — is this not a poem of Cao Mengde? After he broke Jingzhou and sailed east with the current, a thousand warships in a row, banners blotting out the sky; he was truly a hero of his age — and where is he today? And what of you and me: fishermen and woodcutters on the sandbanks of the river, companions to fish and shrimp? I lament the briefness of my life, and <span class="tann reg-estrangement" data-id="R1-water-guest-1">envy the endless flow of the great river.</span> I would grasp the hand of a flying immortal and roam with him, and <span class="tann reg-estrangement" data-id="R1-moon-guest-2">embrace the bright moon and never end</span> — but I know this cannot be obtained in a moment, and so <span class="tann reg-estrangement" data-id="R1-wind-guest-1">I pour my lingering sounds into the mournful wind.</span>"</div>
+  </div>
+
+  <!-- R1P4 -->
+  <div class="pb">
+    <div class="pid">R1 · P4</div>
+    <div class="zh">蘇子曰：「客亦知夫<span class="ann reg-harmony" data-id="R1-water-moon-opening" data-char="水與月" data-image="Water (水) + Moon (月)" data-reg="reg-harmony" data-note="'Do you also know of water and moon?' Su Shi's philosophical counter-argument is announced by naming its two central images directly. He will go on to use these same two natural phenomena — which the Guest has lamented as emblems of transience — to demonstrate their constancy. The same images, read differently, yield opposite conclusions. Emotional register: Harmony — the beginning of philosophical consolation." data-target="img-water">水與月</span>乎？<span class="ann reg-harmony" data-id="R1-water-moon-1" data-char="逝者／盈虛" data-image="Water (水) + Moon (月)" data-reg="reg-harmony" data-note="'The flowing river is like this — and yet it has never truly gone; the waxing and waning moon is like that — and yet it has never truly increased or decreased.' Su Shi's philosophical argument uses water and moon as twin images of apparent change that reveal permanent constancy. This is the conceptual pivot of the First Rhapsody: the Guest sees transience and mourns; Su Shi sees the same phenomena and finds consolation. The river-as-time analogy originates in the Confucian Analects." data-target="img-water">逝者如斯，而未嘗往也；盈虛者如彼，而卒莫消長也。</span>蓋將自其變者而觀之，則天地曾不能以一瞬；自其不變者而觀之，則物與我皆無盡也，而又何羨乎！且夫天地之間，物各有主，苟非吾之所有，雖一毫而莫取。惟<span class="ann reg-harmony" data-id="R1-wind-moon-1" data-char="清風／明月" data-image="Wind (風) + Moon (月)" data-reg="reg-harmony" data-note="'The pure wind on the river, and the bright moon between the hills.' Wind and moon appear together as the 'inexhaustible treasury of the Creator,' freely available to anyone regardless of rank or wealth. Su Shi — a political exile stripped of office — discovers that the most valuable things cannot be taken away by political reversal. This wind-moon pairing is the direct answer to the Guest's mournful wind (托遺響於悲風) and impossible moon (抱明月而長終): the same images, reframed by philosophical perspective, become abundance rather than loss. Emotional register: Harmony — the resolution of the text's central tension." data-target="img-wind">江上之清風，與山間之明月，</span>耳得之而為聲，目遇之而成色，取之無禁，用之不竭，是造物者之無盡藏也，而吾與子之所共適。」</div>
+    <div class="trans watson" id="w-R1P4"><div class="trans-label">Watson · 1965</div>"Do you know about <span class="tann reg-harmony" data-id="R1-water-moon-opening">the water and the moon</span>?" Su asked. "<span class="tann reg-harmony" data-id="R1-water-moon-1">The one flows by and yet never goes; the other waxes and wanes and yet in the end is neither larger nor smaller.</span> If you look at things in terms of change, then there is nothing in heaven and earth that does not change in the blink of an eye. If you look at them in terms of changelessness, then all things, along with you and me, are without end. What is there to envy? Moreover, among the things in heaven and earth, each thing has its master, and if something is not mine, I would not take a hair of it. Only <span class="tann reg-harmony" data-id="R1-wind-moon-1">the clear wind on the river and the bright moon on the hills</span> — these your ear hears and turns to sound, your eye encounters and makes into color; taking them you do not deplete them, using them you do not exhaust them. They are the inexhaustible treasury of the Creator, and you and I together may enjoy them freely."</div>
+    <div class="trans owen" id="o-R1P4"><div class="trans-label">Owen · 1996</div>Su Tzu said: "Do you know of <span class="tann reg-harmony" data-id="R1-water-moon-opening">the water and the moon</span>? <span class="tann reg-harmony" data-id="R1-water-moon-1">The one flows past and yet has never gone; the other waxes and wanes and yet in the end neither grows nor diminishes.</span> If we look at things from the standpoint of their changing, then heaven and earth cannot last even the blink of an eye; if we look at them from the standpoint of their not changing, then both things and ourselves are without end. Furthermore, each thing in heaven and earth has its proper keeper — and if something is not mine, I would not take a single strand of it. Only <span class="tann reg-harmony" data-id="R1-wind-moon-1">the pure wind on the river and the bright moon between the hills</span> — when the ear receives it, it becomes sound; when the eye meets it, it makes a color; you can take these without prohibition, use them and they are never exhausted. This is the inexhaustible treasury of the Creator, and it is here for you and me to enjoy together."</div>
+  </div>
+
+  <!-- R1P5 -->
+  <div class="pb">
+    <div class="pid">R1 · P5</div>
+    <div class="zh"><span class="ann reg-harmony" data-id="R1-guest-3" data-char="客" data-image="The Guest (客)" data-reg="reg-harmony" data-note="'The Guest smiled with joy, and they rinsed the cups and poured again.' The Guest, persuaded by Su Shi's argument, is transformed from despair to joy. This is the emotional endpoint of the First Rhapsody's philosophical dialogue. The Guest never speaks again — he simply becomes happy and drinks. Whether this silence represents genuine conversion or literary convenience is a question the DSE leaves open. Emotional register: Harmony." data-target="img-guest">客喜而笑，洗盞更酌。</span>餚核既盡，杯盤狼藉，相與枕藉乎舟中，不知東方之既白。</div>
+    <div class="trans watson" id="w-R1P5"><div class="trans-label">Watson · 1965</div><span class="tann reg-harmony" data-id="R1-guest-3">The guest smiled with pleasure.</span> We washed our cups and poured again. The delicacies had all been consumed, the cups and plates were in disorder. We lay sprawled against each other in the boat, not noticing when the eastern sky had already turned white.</div>
+    <div class="trans owen" id="o-R1P5"><div class="trans-label">Owen · 1996</div><span class="tann reg-harmony" data-id="R1-guest-3">The guest smiled and was pleased;</span> we rinsed our cups and poured again. When the food and fruit were finished, cups and dishes lay scattered in disorder. We rested against each other in the boat, not realizing that it was already growing light in the east.</div>
+  </div>
+</div><!-- /col left -->
+
+<!-- ═══════════════════════════════════ -->
+<!-- RIGHT — Second Rhapsody           -->
+<!-- ═══════════════════════════════════ -->
+<div class="col">
+  <div class="col-head">
+    <h2>後赤壁賦</h2>
+    <div class="en">Second Red Cliff Rhapsody</div>
+    <div class="dateline">10th month, Yuanfeng 5 (≈ November 1082) · The uncanny, the elegiac, the dream</div>
+  </div>
+
+  <!-- R2P1 -->
+  <div class="pb">
+    <div class="pid">R2 · P1</div>
+    <div class="zh">是歲十月之望，步自雪堂，將歸於臨皋。二客從予，過黃泥之坂。霜露既降，木葉盡脫，人影在地，<span class="ann reg-estrangement" data-id="R2-moon-1" data-char="明月" data-image="Moon (月)" data-reg="reg-estrangement" data-note="'Frost and dew had fallen; all the leaves had shed. Our shadows were on the ground; looking up, we saw the bright moon.' The moon appears early in the Second Rhapsody, but the context is starkly different from the First. There, the moon 'rose' and 'lingered' — personified, in motion, intimate. Here, the moon is simply 'seen' by looking up, after frost and stripped branches have emptied the landscape around it. The moon has not changed; the speaker's world has. Emotional register: Estrangement — the moon in a winter landscape of loss and reduction." data-target="img-moon">仰見明月。</span>顧而樂之，行歌相答。</div>
+    <div class="trans watson" id="w-R2P1"><div class="trans-label">Watson · 1965</div>That same year, on the night of the full moon of the tenth month, I walked from Hsueh Hall back toward Lin-kao. Two guests accompanied me. We passed through Yellow Mud Slope. Frost and dew had already fallen; the leaves of the trees were all gone. Our shadows fell on the ground and we <span class="tann reg-estrangement" data-id="R2-moon-1">looked up to see the bright moon.</span> We gazed about us with pleasure, singing and answering each other's songs as we walked.</div>
+    <div class="trans owen" id="o-R2P1"><div class="trans-label">Owen · 1996</div>That same year, on the night of the full moon of the tenth month, I walked from Xuetang back toward Lingao. Two guests were with me. We crossed Yellow Mud Slope. Frost and dew had already fallen; all the leaves had been stripped from the trees. Our shadows lay on the ground, and we <span class="tann reg-estrangement" data-id="R2-moon-1">looked up to see the bright moon.</span> We enjoyed the scene, walking along singing, answering each other in turn.</div>
+  </div>
+
+  <!-- R2P2 -->
+  <div class="pb">
+    <div class="pid">R2 · P2</div>
+    <div class="zh">已而歎曰：「有客無酒，有酒無肴，<span class="ann reg-tension" data-id="R2-moon-wind-1" data-char="月白風清" data-image="Moon (月) + Wind (風)" data-reg="reg-tension" data-note="'The moon is white and the breeze is cool.' Moon and wind appear together as the trigger for the second Red Cliff journey. On the surface this is a moment of beauty — the night is too fine to waste. But within the Second Rhapsody's overall arc, this same beauty will lead to an uncanny experience. Compare with the First Rhapsody: there, wind and moon prompted transcendence; here, they prompt a return to a site that will prove unrecognizable. Emotional register: Tension — surface beauty shadowed by what follows." data-target="img-moon">月白風清，</span>此良夜之難虛也！」顧而謂二客曰：「今者薄暮，舉網得魚，巨口細鱗，狀似松江之鱸；顧安所得酒乎？」歸而謀諸婦。婦曰：「我有斗酒，藏之久矣，以待子不時之需。」於是攜酒與魚，<span class="ann reg-uncanny" data-id="R2-redcliff-return" data-char="赤壁" data-image="Red Cliff (赤壁)" data-reg="reg-uncanny" data-note="'We went back to roam beneath Red Cliff.' This is the second arrival at Red Cliff, three months after the First Rhapsody. The verb 復 (fù, 'again' / 'to return') signals a deliberate revisiting. But what follows will reveal how thoroughly the site has been transformed by winter and by the speaker's changed inner state. Emotional register: Uncanny — the return to a site that will prove unrecognizable." data-target="img-redcliff">復游於赤壁之下。</span></div>
+    <div class="trans watson" id="w-R2P2"><div class="trans-label">Watson · 1965</div>Then one of us sighed and said, "We have guests but no wine; and if we had wine, there is no food to go with it. <span class="tann reg-tension" data-id="R2-moon-wind-1">The moon is white, the breeze is cool</span> — what a pity to let such a fine night pass!" I agreed and said, "This evening at dusk I cast my net and caught a fish with a big mouth and fine scales — something like the perch of Sung-chiang. But where can we get wine?" We went home and consulted my wife. She said, "I have a jug of wine I've been saving for some time against an emergency." So we took the wine and fish and went back to <span class="tann reg-uncanny" data-id="R2-redcliff-return">sail beneath Red Cliff.</span></div>
+    <div class="trans owen" id="o-R2P2"><div class="trans-label">Owen · 1996</div>After a while one of them sighed and said: "We have guests but no wine; we have wine but no food. <span class="tann reg-tension" data-id="R2-moon-wind-1">The moon is white and the breeze is cool</span> — can we just let this fine night pass for nothing?" I thought this over and said: "At dusk today I cast my net and caught a fish with a big mouth and fine scales — like the perch of Songjiang. But where can we get wine?" We went back to consult my wife. She said: "I have a pint of wine I've been keeping for a long time now, in case you might have an unexpected need." And so we took the wine and fish and went back to <span class="tann reg-uncanny" data-id="R2-redcliff-return">roam beneath Red Cliff.</span></div>
+  </div>
+
+  <!-- R2P3 -->
+  <div class="pb">
+    <div class="pid">R2 · P3</div>
+    <div class="zh"><span class="ann reg-uncanny" data-id="R2-redcliff-1" data-char="赤壁" data-image="Red Cliff (赤壁) + Water (水)" data-reg="reg-uncanny" data-note="'The river flowed with sound; the sheer banks rose a thousand feet; the mountains were tall and the moon small; the water had fallen and the rocks emerged.' Each element marks a transformation from the First Rhapsody: the river was silent (水波不興) before, now it has audible urgency; the water that provided a luminous surface (水光接天) has receded, exposing rock. Red Cliff has ceased to be a backdrop and become a physical, overwhelming presence. Emotional register: Uncanny." data-target="img-redcliff">江流有聲，斷岸千尺，<span class="ann reg-estrangement" data-id="R2-moon-2" data-char="月小" data-image="Moon (月)" data-reg="reg-estrangement" data-note="'The mountains were tall and the moon small.' The moon has retreated: diminished by the height of the winter landscape. In the First Rhapsody, the moon rose large and intimate, lingering like a companion. Here it has shrunk to a distant point above towering peaks. Same moon; transformed relationship. Emotional register: Estrangement." data-target="img-moon">山高月小，</span><span class="ann reg-uncanny" data-id="R2-water-cliff-1" data-char="水落石出" data-image="Water (水)" data-reg="reg-uncanny" data-note="'The water had fallen and the rocks emerged.' In summer, this water covered the rocks and provided the smooth surface for the philosophical boat journey of the First Rhapsody. Now, receded by winter, it exposes jagged stone. Water is no longer a mirror of transcendence — it has withdrawn, leaving only hard, indifferent bedrock. Emotional register: Uncanny." data-target="img-water">水落石出。</span></span>曾日月之幾何，而<span class="ann reg-uncanny" data-id="R2-redcliff-2" data-char="江山" data-image="Red Cliff (赤壁)" data-reg="reg-uncanny" data-note="'How few days and months have passed — and the rivers and mountains are unrecognizable!' 江山 (rivers and mountains) is also a conventional metonym in Chinese for 'the nation' or 'the world as one knows it.' For an exile, the landscape becoming unrecognizable resonates with personal as well as geographical loss of orientation. Emotional register: Uncanny." data-target="img-redcliff">江山不可復識矣！</span></div>
+    <div class="trans watson" id="w-R2P3"><div class="trans-label">Watson · 1965</div><span class="tann reg-uncanny" data-id="R2-redcliff-1">The river was rushing and roaring, the banks were sheer and a thousand feet high,</span> <span class="tann reg-estrangement" data-id="R2-moon-2">the mountains were tall and the moon tiny,</span> <span class="tann reg-uncanny" data-id="R2-water-cliff-1">the water fallen and rocks showing.</span> How many days and months had it been — and <span class="tann reg-uncanny" data-id="R2-redcliff-2">the rivers and hills were unrecognizable!</span></div>
+    <div class="trans owen" id="o-R2P3"><div class="trans-label">Owen · 1996</div><span class="tann reg-uncanny" data-id="R2-redcliff-1">The river flowed with sound; the sheer banks rose a thousand feet;</span> <span class="tann reg-estrangement" data-id="R2-moon-2">the mountains were high and the moon small;</span> <span class="tann reg-uncanny" data-id="R2-water-cliff-1">the water had receded and rocks appeared.</span> How many days and months had it been? — and <span class="tann reg-uncanny" data-id="R2-redcliff-2">the rivers and mountains were unrecognizable.</span></div>
+  </div>
+
+  <!-- R2P4 -->
+  <div class="pb">
+    <div class="pid">R2 · P4</div>
+    <div class="zh">予乃攝衣而上，履巉岩，披蒙茸，踞虎豹，登虬龍，攀棲鶻之危巢，俯馮夷之幽宮。蓋二客不能從焉。劃然長嘯，草木震動，山鳴谷應，<span class="ann reg-tension" data-id="R2-wind-1" data-char="風起水涌" data-image="Wind (風) + Water (水)" data-reg="reg-tension" data-note="'The wind rose and the water surged.' Wind and water appear together in reaction to Su Shi's cry — both suddenly agitated. Compare with the opening of R1P1: 清風徐來，水波不興 (a light breeze came gently; the water was unruffled). There, wind and water were serene and still. Here they are violent and reactive. The landscape answers Su Shi, but not with transcendent harmony — with something wild and unsettling. Emotional register: Tension — sublime communion with nature, or uncanny echo in an alienated landscape?" data-target="img-wind">風起水涌。</span>予亦悄然而悲，肅然而恐，凛乎其不可留也。</div>
+    <div class="trans watson" id="w-R2P4"><div class="trans-label">Watson · 1965</div>I gathered up my robe and climbed up. I picked my way over jutting rocks, pushed through the tangled underbrush, crouched on tiger- and leopard-shaped boulders, pulled myself up on gnarled and dragon-shaped trees, and reached up to clutch the precarious nests of the falcons, looking down into the shadowy palace of the River God. My two guests were unable to follow me. I let out a long piercing cry. Trees and grasses shook; the mountains rang; the valleys echoed; <span class="tann reg-tension" data-id="R2-wind-1">wind arose and waves rushed.</span> I too was filled with a quiet grief, and was tense with awe. A chill crept over me; it was impossible to stay.</div>
+    <div class="trans owen" id="o-R2P4"><div class="trans-label">Owen · 1996</div>I gathered up my robe and climbed the cliff. I stepped over jagged rocks, pushed through tangled undergrowth, crouched on boulders shaped like tigers and leopards, climbed trees that twisted like coiling dragons, reached up to the precarious nests of peregrines and looked down into the shadowy palace of the River Lord. My two guests could not follow me. I let out a long, sharp cry; grass and trees trembled; mountains answered, valleys resounded; <span class="tann reg-tension" data-id="R2-wind-1">wind rose and waters surged.</span> I too was quietly saddened, and deeply awed, a chill creeping over me — I could not remain there.</div>
+  </div>
+
+  <!-- R2P5 -->
+  <div class="pb">
+    <div class="pid">R2 · P5</div>
+    <div class="zh">返而登舟，放乎中流，聽其所止而休焉。時夜將半，四顧寂寥。<span class="ann reg-uncanny" data-id="R2-water-1" data-char="江·孤鶴" data-image="Water (水/江)" data-reg="reg-uncanny" data-note="'A solitary crane flew across the river from the east, its wings like cartwheels, its skirt black and its top white, crying out sharply, skimming past my boat and flying west.' The water is now the stage for an apparition. The crane (鶴, hè) is a Daoist immortal's mount — its sudden nocturnal appearance, its loud cry, its strange coloring, and its swift disappearance mark it as uncanny. Water is no longer the philosophical mirror of R1P4 but the medium of the uncanny and the unresolvable. Emotional register: Uncanny." data-target="img-water">適有孤鶴，橫江東來，翅如車輪，玄裳縞衣，戛然長鳴，掠予舟而西去。</span></div>
+    <div class="trans watson" id="w-R2P5"><div class="trans-label">Watson · 1965</div>I went back and got into the boat, let it drift, and went to sleep where it stopped. Around midnight, <span class="tann reg-uncanny" data-id="R2-water-1">a lone crane came flying across the river from the east. Its wings were like cartwheels; its black and white plumage gleamed. It screamed and, skimming past my boat, flew off to the west.</span></div>
+    <div class="trans owen" id="o-R2P5"><div class="trans-label">Owen · 1996</div>I went back and got in the boat, let it drift in midstream, and rested where it stopped of itself. It was approaching midnight. All around was still and desolate. Just then <span class="tann reg-uncanny" data-id="R2-water-1">a solitary crane came flying from the east across the river. Its wings were like cartwheels; its robe was black, its shirt white; it uttered a long, piercing cry and swept past my boat heading westward.</span></div>
+  </div>
+
+  <!-- R2P6 -->
+  <div class="pb">
+    <div class="pid">R2 · P6</div>
+    <div class="zh">予亦就睡，夢一道士，羽衣蹁躚，過臨皋之下，揖予而言曰：「<span class="ann reg-uncanny" data-id="R2-redcliff-dream" data-char="赤壁" data-image="Red Cliff (赤壁)" data-reg="reg-uncanny" data-note="'Was the Red Cliff journey enjoyable?' The dream Daoist's first words name Red Cliff — but from within a dream, after an uncanny night on the river. Red Cliff began as historical backdrop (R1P1), became an overwhelming and unrecognizable winter site (R2P3), and is now named inside a dream by a figure whose identity cannot be fixed. The question is ambiguous: a friendly inquiry, or quiet irony given what the night actually felt like? Emotional register: Uncanny." data-target="img-redcliff">赤壁之游樂乎？</span>」問其姓名，俯而不答。「嗚呼！噫嘻！我知之矣。<span class="ann reg-uncanny" data-id="R2-guest-1" data-char="道士·客·鶴" data-image="The Guest (客)" data-reg="reg-uncanny" data-note="The dream-Daoist's identity is the most debated question in the Second Rhapsody's scholarship. Is this: (1) the crane transformed into an immortal; (2) Su Shi's own desire for transcendence made visible — the 'feathered immortal' he aspired to become in R1P1; or (3) the Guest from the First Rhapsody, whose grief has somehow dissolved into this enigmatic figure? The DSE encodes all three readings. Host and guest, dreamer and dream, mortal and immortal dissolve into each other. Emotional register: Uncanny — the Guest's identity reaches maximum instability." data-target="img-guest">疇昔之夜，飛鳴而過我者，非子也邪？」</span>道士顧笑，予亦驚寤。開戶視之，不見其處。</div>
+    <div class="trans watson" id="w-R2P6"><div class="trans-label">Watson · 1965</div>I fell asleep and dreamed of a Taoist priest wearing a feathery robe, fluttering and dancing, who passed by beneath Lin-kao, bowed to me, and said, "<span class="tann reg-uncanny" data-id="R2-redcliff-dream">Did you enjoy your trip to Red Cliff?</span>" I asked his name; he bent his head and did not answer. "Ah! I know. <span class="tann reg-uncanny" data-id="R2-guest-1">Last night — was it not you that flew crying past my boat?</span>" The priest looked back and laughed. I woke up startled and opened the door to look. There was nothing there.</div>
+    <div class="trans owen" id="o-R2P6"><div class="trans-label">Owen · 1996</div>Then I went to sleep and dreamed of a Daoist priest in feathered robes, fluttering and light, who passed beneath Lingao, bowed, and said to me: "<span class="tann reg-uncanny" data-id="R2-redcliff-dream">Was your excursion to Red Cliff enjoyable?</span>" I asked his name; he bowed his head and would not answer. "Alas!" I said. "I know you now — <span class="tann reg-uncanny" data-id="R2-guest-1">was it not you that last night flew crying past my boat?</span>" The priest looked back and smiled. I woke suddenly with a start, opened the door and looked out — there was nothing there.</div>
+  </div>
+
+</div><!-- /col right -->
+</div><!-- /synoptic -->
+
+<script>
+let activeId  = null;
+let transMode = 'original';
+
+function setTrans(mode) {
+  transMode = mode;
+  ['original','watson','owen','both'].forEach(m =>
+    document.getElementById('btn-'+m).classList.toggle('active', m === mode));
+  document.querySelectorAll('.trans.watson').forEach(el =>
+    el.classList.toggle('show', mode === 'watson' || mode === 'both'));
+  document.querySelectorAll('.trans.owen').forEach(el =>
+    el.classList.toggle('show', mode === 'owen'   || mode === 'both'));
+  if (activeId) applyTransHighlight(activeId);
+}
+
+// IDs of spans that contain nested .ann children
+const OUTER_ANNS = new Set(['R1-guest-2', 'R2-redcliff-1']);
+// IDs of spans that live inside another .ann
+const INNER_ANNS = new Set([
+  'R1-moon-guest-1','R1-water-guest-1','R1-moon-guest-2','R1-wind-guest-1',
+  'R2-moon-2','R2-water-cliff-1'
+]);
+
+function handleAnnClick(e) {
+  const span = e.currentTarget;
+  const id   = span.dataset.id;
+
+  // For outer spans: ignore clicks that originated inside an inner .ann
+  if (OUTER_ANNS.has(id)) {
+    const targetAnnId = e.target.closest('.ann')?.dataset.id;
+    if (INNER_ANNS.has(targetAnnId)) return;
+  }
+
+  // Safe to claim this event now
+  e.stopPropagation();
+
+  if (activeId === id) { closePopup(); return; }
+  clearAll();
+  activeId = id;
+  span.classList.add('active-ann');
+
+  // Populate popup
+  const reg     = span.dataset.reg;
+  const regWord = reg.replace('reg-','');
+  document.getElementById('pop-char').textContent  = span.dataset.char;
+  document.getElementById('pop-image').textContent = span.dataset.image;
+  document.getElementById('pop-note').textContent  = span.dataset.note;
+  const tag = document.getElementById('pop-tag');
+  tag.textContent = regWord.charAt(0).toUpperCase() + regWord.slice(1);
+  tag.className   = 'pop-tag ' + reg;
+  document.getElementById('pop-link').href = 'images.html#' + (span.dataset.target || '');
+
+  // Position popup — fixed element: use viewport coords only, no scrollY
+  const popup = document.getElementById('popup');
+  popup.classList.add('open');
+  const rect = span.getBoundingClientRect();
+  const popH = popup.offsetHeight;
+  const popW = popup.offsetWidth;
+
+  let top  = rect.bottom + 8;
+  let left = rect.left;
+
+  // Clamp horizontally within viewport
+  if (left + popW > window.innerWidth - 10) left = window.innerWidth - popW - 10;
+  if (left < 10) left = 10;
+
+  // Flip above span if overflows bottom; pin to 60px from top as last resort
+  if (top + popH > window.innerHeight - 10) top = rect.top - popH - 8;
+  if (top < 60) top = 60;
+
+  popup.style.top  = top  + 'px';
+  popup.style.left = left + 'px';
+
+  applyTransHighlight(id);
+}
+
+function applyTransHighlight(id) {
+  // Clear previous translation highlights
+  document.querySelectorAll('.tann-active').forEach(el =>
+    el.classList.remove('tann-active'));
+  if (!id) return;
+
+  // Find the register from the active Chinese span
+  const activeSpan = document.querySelector('.ann[data-id="' + id + '"]');
+  if (!activeSpan) return;
+  const reg = activeSpan.dataset.reg;
+
+  // Highlight matching tann spans only inside visible translation blocks
+  document.querySelectorAll('.tann[data-id="' + id + '"]').forEach(el => {
+    const block = el.closest('.trans');
+    if (block && block.classList.contains('show')) {
+      el.classList.add('tann-active', reg);
+    }
+  });
+}
+
+function closePopup() {
+  // Only hide the popup box — highlights stay until clearAll() is called.
+  document.getElementById('popup').classList.remove('open');
+}
+
+function clearAll() {
+  // Clear highlights AND close popup. Called before activating a new annotation,
+  // or when the user clicks completely outside any annotation.
+  activeId = null;
+  document.getElementById('popup').classList.remove('open');
+  document.querySelectorAll('.ann.active-ann').forEach(el => el.classList.remove('active-ann'));
+  document.querySelectorAll('.tann-active').forEach(el =>
+    el.classList.remove('tann-active','reg-harmony','reg-estrangement','reg-tension','reg-uncanny'));
+}
+
+// Attach click handlers to all annotation spans
+document.querySelectorAll('.ann').forEach(s => s.addEventListener('click', handleAnnClick));
+
+// Clicking outside any annotation or popup: clear everything including highlights
+document.addEventListener('click', e => {
+  if (!e.target.closest('.ann') && !e.target.closest('#popup')) clearAll();
+});
+</script>
+</body>
+</html>

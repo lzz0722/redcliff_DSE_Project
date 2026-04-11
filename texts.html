@@ -103,10 +103,73 @@
     .pop-link { display: inline-block; margin-top: .6rem; font-family: var(--font-ui); font-size: .72rem; color: var(--watson); text-decoration: none; }
     .pop-link:hover { text-decoration: underline; }
 
+    /* Rationale banner */
+    .rationale {
+      max-width: 960px;
+      margin: 2rem auto 0;
+      padding: 1.8rem 2.5rem 1.6rem;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+    .rationale h3 {
+      font-family: var(--font-ui);
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: .9rem;
+    }
+    .rationale p {
+      font-family: var(--font-en);
+      font-size: .88rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: .7rem;
+    }
+    .rationale p:last-child { margin-bottom: 0; }
+    .rationale strong { color: var(--ink); font-weight: 500; }
+    .rationale code {
+      font-family: 'SFMono-Regular', Consolas, monospace;
+      font-size: .8rem;
+      background: #f5f0e6;
+      padding: .1rem .35rem;
+      border-radius: 3px;
+      color: var(--gold);
+    }
+    .rationale .evt-limits {
+      margin-top: .8rem;
+      padding: .9rem 1.1rem;
+      background: #faf7f0;
+      border-left: 3px solid var(--border);
+      border-radius: 0 4px 4px 0;
+    }
+    .rationale .evt-limits p {
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #777;
+      margin-bottom: .4rem;
+    }
+    .rationale-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #ccc;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: .2rem;
+      flex-shrink: 0;
+      transition: color .15s;
+    }
+    .rationale-close:hover { color: #888; }
+
     @media (max-width: 860px) {
       .synoptic { grid-template-columns: 1fr; }
       .col { border-right: none; border-bottom: 2px solid var(--border); }
       .legend { display: none; }
+      .rationale { margin: 1rem; padding: 1.2rem; }
     }
   </style>
 </head>
@@ -116,7 +179,6 @@
   <span class="nav-brand">前後赤壁賦 DSE</span>
   <a href="index.html">Home</a>
   <a href="manuscript.html">Manuscript</a>
-  <a href="evt2-beta2.1/index.html">EVT</a>
   <a href="texts.html" class="active">Texts</a>
   <a href="images.html">Five Images</a>
   <a href="bibliography.html">Bibliography</a>
@@ -150,6 +212,60 @@
   </div>
   <div class="pop-note" id="pop-note"></div>
   <a class="pop-link" id="pop-link" href="#">→ See full image analysis</a>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- RATIONALE: Why this page exists    -->
+<!-- ═══════════════════════════════════ -->
+<div class="rationale" id="rationale-banner">
+  <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+    <h3>Why this page exists — beyond EVT</h3>
+    <button class="rationale-close" onclick="document.getElementById('rationale-banner').style.display='none'" title="Dismiss">✕</button>
+  </div>
+  <p>
+    The full TEI/XML encoding of both Rhapsodies (<code>redcliff.xml</code>) contains
+    <strong>26 semantic annotations</strong> marking the five core images (月 水 風 赤壁 客),
+    each tagged with an <strong>emotional register</strong> (Harmony, Estrangement, Tension, Uncanny),
+    <strong>52 editorial and source notes</strong> written for readers unfamiliar with classical Chinese literature,
+    and <strong>9 translation apparatus entries</strong> comparing Watson's and Owen's renderings of key passages.
+    This encoding is fully TEI P5 compliant.
+  </p>
+  <p>
+    <strong>EVT 2</strong> (Edition Visualization Technology), the standard platform for rendering TEI-encoded
+    digital scholarly editions, was used to validate this encoding. EVT successfully loads the XML file
+    and renders the critical text with the translation apparatus — confirming that the encoding is
+    standards-compliant and machine-readable.
+  </p>
+  <div class="evt-limits">
+    <p>However, EVT 2's critical edition parser has structural limitations that prevent it from
+    fully visualising this edition's scholarly argument:</p>
+    <p>
+      <strong>No synoptic view</strong> — EVT cannot display two <code>&lt;div type="rhapsody"&gt;</code>
+      elements side by side. The emotional contrast between the two Rhapsodies, which is the core of this
+      edition's research question, requires parallel reading.
+    </p>
+    <p>
+      <strong>No semantic highlighting</strong> — EVT does not interpret <code>@ana</code> attributes
+      on <code>&lt;seg&gt;</code> elements. The five recurring images cannot be colour-coded by emotional register,
+      making the transformation pattern invisible.
+    </p>
+    <p>
+      <strong>No editorial note rendering</strong> — <code>&lt;note type="editorial"&gt;</code> elements
+      inside <code>&lt;lem&gt;</code> cause parsing errors; placed outside, they are silently ignored.
+      The cultural context essential for non-specialist readers cannot be displayed.
+    </p>
+    <p>
+      <strong>No image-based filtering</strong> — There is no mechanism to isolate and compare
+      occurrences of a single image (e.g. all instances of 月) across both texts.
+    </p>
+  </div>
+  <p style="margin-top: .9rem;">
+    This page addresses each of these limitations: a <strong>synoptic two-column layout</strong> with
+    <strong>colour-coded image annotations</strong>, <strong>clickable editorial notes</strong>,
+    and a <strong>translation toggle</strong> comparing Watson and Owen paragraph by paragraph.
+    For image-based filtering and the full comparative analysis, see the
+    <a href="images.html" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold);">Five Images</a> page.
+  </p>
 </div>
 
 <div class="synoptic">

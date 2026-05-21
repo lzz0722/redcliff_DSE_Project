@@ -192,7 +192,7 @@
 </div>
 <script>
 document.querySelectorAll('.tab').forEach(tab=>{tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));tab.classList.add('active');document.getElementById('panel-'+tab.dataset.tab).classList.add('active')})});
-function toggleColTrans(btn,id){const el=document.getElementById(id);const s=el.classList.contains('show');const g=btn.parentElement;g.querySelectorAll('.col-trans-btn').forEach(b=>b.classList.remove('active'));g.parentElement.querySelectorAll('.col-trans').forEach(t=>t.classList.remove('show'));if(!s){btn.classList.add('active');el.classList.add('show')}}
+function toggleColTrans(btn,id){const el=document.getElementById(id);const s=el.classList.contains('show');if(s){el.classList.remove('show');btn.classList.remove('active')}else{el.classList.add('show');btn.classList.add('active')}}
 function handleHash(){const h=window.location.hash.replace('#','');const m={'img-moon':'moon','img-water':'water','img-wind':'wind','img-redcliff':'redcliff','img-guest':'guest'};const t=m[h];if(t){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));const tab=document.querySelector('.tab[data-tab="'+t+'"]');if(tab)tab.classList.add('active');const p=document.getElementById('panel-'+t);if(p)p.classList.add('active')}}
 handleHash();window.addEventListener('hashchange',handleHash);
 </script>
